@@ -1,0 +1,57 @@
+# WordPress Theme .gitignore
+
+# Compiled SCSS
+styles/compiled/
+
+# Node modules (if using npm)
+node_modules/
+
+# Composer vendor directory (keep this for now since you're using it)
+# vendor/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+
+# WordPress specific
+wp-config.php
+/uploads/
+*.sql
+*.tar.gz
+*.zip
+
+# Backup files
+*.bak
+*~
+
+# Cache files
+*.cache 

@@ -1,0 +1,41 @@
+/*
+ * SCSS Variables
+ * Define all project variables here
+ */
+
+// Google Fonts
+$font-lexend-deca: 'Lexend Deca', sans-serif;
+$font-caladea: 'Caladea', serif;
+
+// Font Weights
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+// Font Family Assignments
+$font-family-primary: $font-lexend-deca;
+$font-family-secondary: $font-caladea;
+$font-family-base: $font-lexend-deca;
+$font-family-heading: $font-caladea;
+
+// Color Palette
+$orange: #E85124;
+$black: #000000;
+$light-grey: #B4B4B4;
+$grey: #626262;
+$dark-grey: #717171;
+$darkest-grey: #363636;
+
+// Color Assignments
+$primary-color: $orange;
+$secondary-color: $black;
+$text-color: $black;
+$text-light: $grey;
+$text-muted: $light-grey;
+$border-color: $light-grey;
+$background-light: #ffffff;
+$background-dark: $darkest-grey;
+
+// Add your other variables here 

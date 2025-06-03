@@ -1,0 +1,205 @@
+/*
+ * SalesNexus Main SCSS File
+ * 
+ * This file imports all SCSS partials and compiles to CSS
+ */
+
+// Import variables first
+@import 'variables';
+
+// Import base styles
+@import 'base';
+
+// Import layout components
+@import 'header';
+@import 'footer';
+@import 'layout';
+
+// Import components
+@import 'buttons';
+@import 'forms';
+
+// Import utilities
+@import 'utilities'; 
+
+// HERO SLIDER
+
+/* Hero Slider Styles */
+.hero-slider-section {
+    position: relative;
+}
+
+.hero-slider-container {
+
+}
+
+.hero-slider {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.hero-slide {
+    display: none;
+    opacity: 0;
+}
+
+.hero-slide.active {
+    display: block;
+    opacity: 1;
+}
+
+.hero-content-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 100px;
+    
+    .hero-text-content {
+        width: 40%;
+
+        .hero-main-heading {
+        
+        }
+        
+        .hero-subheading {
+        
+        }
+        .hero-buttons {
+        
+        }
+        
+        .btn {
+        
+        }
+        
+        .btn-primary {
+        
+        }
+        
+        .btn-primary:hover {
+        
+        }
+        
+        .btn-secondary {
+        
+        }
+        
+        .btn-secondary:hover {
+        
+        }
+        
+        .hero-deal-text {
+        
+        }
+        
+        .hero-deal-text strong {
+        
+        }
+    }
+    .hero-image-content {
+        width: 60%;
+
+        .hero-mockup-container {
+            width: 100%;
+        }
+        
+        .hero-mockup-image {
+            max-width: 100%;
+        }
+    }
+}
+
+
+.hero-slider-nav {
+    .slider-prev,
+    .slider-next {
+    
+    }
+    
+    .slider-prev:hover,
+    .slider-next:hover {
+    
+    }
+    
+    .slider-dots {
+    
+    }
+    
+    .slider-dot {
+    
+    }
+    
+    .slider-dot.active,
+    .slider-dot:hover {
+    
+    }
+}
+
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .hero-content-wrapper {
+
+    }
+    
+    .hero-text-content {
+
+    }
+    
+    .hero-image-content {
+
+    }
+    
+    .hero-slider-container {
+
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-slider-section {
+
+    }
+    
+    .hero-slider {
+ 
+    }
+    
+    .hero-slide {
+
+    }
+    
+    .hero-content-wrapper {
+
+    }
+    
+    .hero-slider-container {
+ 
+    }
+    
+    .hero-buttons {
+ 
+    }
+    
+    .btn {
+
+    }
+    
+    .hero-slider-nav {
+ 
+    }
+    
+    .slider-prev,
+    .slider-next {
+
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content-wrapper {
+
+    }
+    
+    .hero-buttons {
+
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "name": "salesnexus/child-theme",
+    "description": "SalesNexus WordPress child theme with SCSS support",
+    "type": "wordpress-theme",
+    "require": {
+        "scssphp/scssphp": "^1.11"
+    },
+    "autoload": {
+        "psr-4": {
+            "SalesNexus\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "SalesNexus",
+            "email": "info@salesnexus.com"
+        }
+    ],
+    "minimum-stability": "stable"
+} 

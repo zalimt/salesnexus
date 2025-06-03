@@ -1,0 +1,118 @@
+/*
+ * Utility Classes
+ */
+
+// Font Family Utilities
+.font-lexend {
+    font-family: $font-lexend-deca;
+}
+
+.font-caladea {
+    font-family: $font-caladea;
+}
+
+// Font Weight Utilities
+.font-light {
+    font-weight: $font-weight-light;
+}
+
+.font-regular {
+    font-weight: $font-weight-regular;
+}
+
+.font-medium {
+    font-weight: $font-weight-medium;
+}
+
+.font-semibold {
+    font-weight: $font-weight-semibold;
+}
+
+.font-bold {
+    font-weight: $font-weight-bold;
+}
+
+// Color Utilities - Text Colors
+.text-orange {
+    color: $orange;
+}
+
+.text-black {
+    color: $black;
+}
+
+.text-light-grey {
+    color: $light-grey;
+}
+
+.text-grey {
+    color: $grey;
+}
+
+.text-dark-grey {
+    color: $dark-grey;
+}
+
+.text-darkest-grey {
+    color: $darkest-grey;
+}
+
+.text-white {
+    color: #ffffff;
+}
+
+// Background Color Utilities
+.bg-orange {
+    background-color: $orange;
+}
+
+.bg-black {
+    background-color: $black;
+}
+
+.bg-light-grey {
+    background-color: $light-grey;
+}
+
+.bg-grey {
+    background-color: $grey;
+}
+
+.bg-dark-grey {
+    background-color: $dark-grey;
+}
+
+.bg-darkest-grey {
+    background-color: $darkest-grey;
+}
+
+.bg-white {
+    background-color: #ffffff;
+}
+
+// Border Color Utilities
+.border-orange {
+    border-color: $orange;
+}
+
+.border-black {
+    border-color: $black;
+}
+
+.border-light-grey {
+    border-color: $light-grey;
+}
+
+.border-grey {
+    border-color: $grey;
+}
+
+.border-dark-grey {
+    border-color: $dark-grey;
+}
+
+.border-darkest-grey {
+    border-color: $darkest-grey;
+}
+
+// Add your other utility classes here

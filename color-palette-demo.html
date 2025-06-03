@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Palette Demo - SalesNexus Theme</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&family=Caladea:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/compiled/main.css">
+    <style>
+        .demo-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .color-card {
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #B4B4B4;
+        }
+        
+        .color-preview {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .color-info {
+            padding: 15px;
+            background: #ffffff;
+        }
+        
+        .color-name {
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #000000;
+        }
+        
+        .color-hex {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #626262;
+            margin-bottom: 8px;
+        }
+        
+        .color-variable {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #E85124;
+            background: #f8f8f8;
+            padding: 3px 6px;
+            border-radius: 3px;
+        }
+        
+        .usage-examples {
+            margin-top: 40px;
+        }
+        
+        .example-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #B4B4B4;
+            border-radius: 8px;
+        }
+        
+        .code-example {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        
+        .utility-demo {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .utility-item {
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1 class="font-caladea font-bold" style="color: #E85124; text-align: center;">SalesNexus Color Palette</h1>
+        <p class="font-lexend font-regular" style="text-align: center; color: #626262;">Your complete color system for consistent design</p>
+
+        <div class="color-grid">
+            <div class="color-card">
+                <div class="color-preview" style="background-color: #E85124; color: white;">
+                    Orange Primary
+                </div>
+                <div class="color-info">
+                    <div class="color-name">Orange</div>
+                    <div class="color-hex">#E85124</div>
+                    <div class="color-variable">$orange</div>
+                </div>
+            </div>
+
+            <div class="color-card">
+                <div class="color-preview" style="background-color: #000000; color: white;">
+                    Black
+                </div>
+                <div class="color-info">
+                    <div class="color-name">Black</div>
+                    <div class="color-hex">#000000</div>
+                    <div class="color-variable">$black</div>
+                </div>
+            </div>
+
+            <div class="color-card">
+                <div class="color-preview" style="background-color: #B4B4B4; color: white;">
+                    Light Grey
+                </div>
+                <div class="color-info">
+                    <div class="color-name">Light Grey</div>
+                    <div class="color-hex">#B4B4B4</div>
+                    <div class="color-variable">$light-grey</div>
+                </div>
+            </div>
+
+            <div class="color-card">
+                <div class="color-preview" style="background-color: #626262; color: white;">
+                    Grey
+                </div>
+                <div class="color-info">
+                    <div class="color-name">Grey</div>
+                    <div class="color-hex">#626262</div>
+                    <div class="color-variable">$grey</div>
+                </div>
+            </div>
+
+            <div class="color-card">
+                <div class="color-preview" style="background-color: #717171; color: white;">
+                    Dark Grey
+                </div>
+                <div class="color-info">
+                    <div class="color-name">Dark Grey</div>
+                    <div class="color-hex">#717171</div>
+                    <div class="color-variable">$dark-grey</div>
+                </div>
+            </div>
+
+            <div class="color-card">
+                <div class="color-preview" style="background-color: #363636; color: white;">
+                    Darkest Grey
+                </div>
+                <div class="color-info">
+                    <div class="color-name">Darkest Grey</div>
+                    <div class="color-hex">#363636</div>
+                    <div class="color-variable">$darkest-grey</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="usage-examples">
+            <h2 class="font-caladea font-bold">Usage Examples</h2>
+
+            <div class="example-section">
+                <h3 class="font-lexend font-semibold">SCSS Variables</h3>
+                <div class="code-example">
+// Use in your SCSS files
+.my-button {
+    background-color: $orange;
+    color: $black;
+    border: 1px solid $light-grey;
+}
+
+.my-text {
+    color: $dark-grey;
+}
+                </div>
+            </div>
+
+            <div class="example-section">
+                <h3 class="font-lexend font-semibold">Utility Classes - Text Colors</h3>
+                <div class="utility-demo">
+                    <span class="utility-item text-orange bg-white" style="border: 1px solid #B4B4B4;">text-orange</span>
+                    <span class="utility-item text-black bg-white" style="border: 1px solid #B4B4B4;">text-black</span>
+                    <span class="utility-item text-grey bg-white" style="border: 1px solid #B4B4B4;">text-grey</span>
+                    <span class="utility-item text-dark-grey bg-white" style="border: 1px solid #B4B4B4;">text-dark-grey</span>
+                    <span class="utility-item text-darkest-grey bg-white" style="border: 1px solid #B4B4B4;">text-darkest-grey</span>
+                </div>
+            </div>
+
+            <div class="example-section">
+                <h3 class="font-lexend font-semibold">Utility Classes - Backgrounds</h3>
+                <div class="utility-demo">
+                    <span class="utility-item bg-orange text-white">bg-orange</span>
+                    <span class="utility-item bg-black text-white">bg-black</span>
+                    <span class="utility-item bg-light-grey text-black">bg-light-grey</span>
+                    <span class="utility-item bg-grey text-white">bg-grey</span>
+                    <span class="utility-item bg-dark-grey text-white">bg-dark-grey</span>
+                    <span class="utility-item bg-darkest-grey text-white">bg-darkest-grey</span>
+                </div>
+            </div>
+
+            <div class="example-section">
+                <h3 class="font-lexend font-semibold">WordPress Block Editor</h3>
+                <p class="font-lexend font-regular">All colors are available in the Gutenberg block editor color palette:</p>
+                <div class="code-example">
+&lt;!-- Block editor will generate classes like: --&gt;
+.has-orange-color { color: #E85124; }
+.has-orange-background-color { background-color: #E85124; }
+.has-black-color { color: #000000; }
+.has-grey-background-color { background-color: #626262; }
+                </div>
+            </div>
+
+            <div class="example-section">
+                <h3 class="font-lexend font-semibold">HTML Usage</h3>
+                <div class="code-example">
+&lt;!-- Text colors --&gt;
+&lt;h1 class="text-orange font-caladea font-bold"&gt;Orange Heading&lt;/h1&gt;
+&lt;p class="text-grey font-lexend"&gt;Grey paragraph text&lt;/p&gt;
+
+&lt;!-- Background colors --&gt;
+&lt;div class="bg-darkest-grey text-white"&gt;Dark background&lt;/div&gt;
+&lt;button class="bg-orange text-white"&gt;Orange Button&lt;/button&gt;
+
+&lt;!-- Border colors --&gt;
+&lt;div class="border-light-grey" style="border-width: 1px; border-style: solid;"&gt;
+    Light grey border
+&lt;/div&gt;
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px; text-align: center; padding: 20px; background: #f8f8f8; border-radius: 8px;">
+            <h3 class="font-caladea font-bold text-orange">Colors Successfully Added! 🎨</h3>
+            <p class="font-lexend text-grey">Your color system is now ready for use across your WordPress theme.</p>
+        </div>
+    </div>
+</body>
+</html> 
