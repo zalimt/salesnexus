@@ -2,7 +2,9 @@
  * Header Styles
  */
 .header {
-    h1 {
+    background-color: $light-grey;
+
+    p {
         font-family: $font-family-primary;
         font-size: 55px;
         font-weight: $font-weight-light;

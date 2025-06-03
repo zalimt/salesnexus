@@ -52,13 +52,13 @@
                                                             <div class="hero-content-wrapper">
                                                                 <div class="hero-text-content">
                                                                     <?php if (!empty($slide['header_hero_slider_slide'])) : ?>
-                                                                        <h1 class="hero-main-heading font-caladea">
+                                                                        <h1 class="hero-main-heading font-caladea t-56 fw-700">
                                                                             <?php echo esc_html($slide['header_hero_slider_slide']); ?>
                                                                         </h1>
                                                                     <?php endif; ?>
                                                                     
                                                                     <?php if (!empty($slide['subheading_hero_slider_slide'])) : ?>
-                                                                        <div class="hero-subheading font-lexend">
+                                                                        <div class="hero-subheading font-lexend t-20 fw-300">
                                                                             <?php echo wp_kses_post(nl2br($slide['subheading_hero_slider_slide'])); ?>
                                                                         </div>
                                                                     <?php endif; ?>
@@ -82,7 +82,7 @@
                                                                     <?php endif; ?>
                                                                     
                                                                     <?php if (!empty($slide['paragrpah_hero_slider_slide'])) : ?>
-                                                                        <div class="hero-deal-text font-lexend">
+                                                                        <div class="hero-deal-text font-lexend t-15">
                                                                             <?php echo wp_kses_post(nl2br($slide['paragrpah_hero_slider_slide'])); ?>
                                                                         </div>
                                                                     <?php endif; ?>
@@ -181,6 +181,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function showSlide(index) {
         // Hide all slides
         slides.forEach(slide => slide.classList.remove('active'));
+        
+        // Remove active class from all dots
         dots.forEach(dot => dot.classList.remove('active'));
         
         // Show current slide
@@ -201,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function startAutoSlide() {
-        slideInterval = setInterval(nextSlide, 8000); // Change slide every 8 seconds
+        slideInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
     }
     
     function stopAutoSlide() {

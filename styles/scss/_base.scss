@@ -2,18 +2,84 @@
  * Base Styles
  */
 
-// Basic font setup
-body {
-    font-family: $font-family-base;
-    font-weight: $font-weight-regular;
-    line-height: 1.6;
+* {
+    margin-block-start: 0;
+    margin-block-end: 0;
 }
 
-// Headings with Caladea Bold
-h1, h2, h3, h4, h5, h6 {
-    font-family: $font-family-heading;
-    font-weight: $font-weight-bold;
-    line-height: 1.2;
+.t-56 {
+    font-size: 56px;
+    line-height: 105%;
+}
+.t-45 {
+    font-size: 45px;
+    line-height: 105%;
+}
+.t-40 {
+    font-size: 40px;
+    line-height: 105%;
+}
+.t-36 {
+    font-size: 36px;
+    line-height: 110%;
+}
+.t31 {
+    font-size: 31px;
+    line-height: 130%;
+}
+.t-28 {
+    font-size: 28px;
+    line-height: 140%;
+}
+.t-25 {
+    font-size: 25px;
+    line-height: 130%;
+}
+.t-24 {
+    font-size: 24px;
+    line-height: 130%;
+}
+.t-20 {
+    font-size: 20px;
+    line-height: 150%;
+}
+.t-19 {
+    font-size: 19px;
+    line-height: 20px;
+}
+.t-18 {
+    font-size: 18px;
+    line-height: 130%;
+}
+.t-17 {
+    font-size: 17px;
+    line-height: 140%;
+}
+.t-16 {
+    font-size: 16px;
+    line-height: 150%;
+}
+.t-15 {
+    font-size: 15px;
+    line-height: 110%;
+}
+.t-14 {
+    font-size: 14px;
+    line-height: 130%;
 }
 
-// Add your other base styles here 
+.fw-700 {
+    font-weight: 700;
+}
+.fw-600 {
+    font-weight: 600;
+}
+.fw-500 {
+    font-weight: 500;
+}
+.fw-400 {
+    font-weight: 400;
+}
+.fw-300 {
+    font-weight: 300;
+}
