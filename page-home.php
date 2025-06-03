@@ -185,6 +185,72 @@
                                 <?php
                                 break;
                                 
+                            case 'tabs':
+                                ?>
+                                <section class="tabs-section">
+                                    <div class="container">
+                                        <?php 
+                                        $tabs = $section['tabs_tab'];
+                                        if ($tabs && is_array($tabs)) : ?>
+                                            <div class="tabs-wrapper">
+                                                <!-- Tab Navigation -->
+                                                <div class="tabs-nav">
+                                                    <?php foreach ($tabs as $index => $tab) : ?>
+                                                        <button class="tab-btn <?php echo $index === 0 ? 'active' : ''; ?>" 
+                                                                data-tab="<?php echo $index; ?>">
+                                                            <?php echo esc_html($tab['tabs_tab_btn_text'] ?: 'Tab ' . ($index + 1)); ?>
+                                                        </button>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                                
+                                                <!-- Tab Content -->
+                                                <div class="tabs-content">
+                                                    <?php foreach ($tabs as $index => $tab) : ?>
+                                                        <div class="tab-pane <?php echo $index === 0 ? 'active' : ''; ?>" 
+                                                             data-tab-content="<?php echo $index; ?>">
+                                                            
+                                                            <?php if (!empty($tab['tabs_tab_cards']) && is_array($tab['tabs_tab_cards'])) : ?>
+                                                                <div class="tab-cards-grid">
+                                                                    <?php foreach ($tab['tabs_tab_cards'] as $card) : ?>
+                                                                        <div class="tab-card">
+                                                                            <?php if (!empty($card['tabs_tab_card_image'])) : ?>
+                                                                                <div class="tab-card-icon">
+                                                                                    <img src="<?php echo esc_url($card['tabs_tab_card_image']['sizes']['thumbnail'] ?: $card['tabs_tab_card_image']['url']); ?>" 
+                                                                                         alt="<?php echo esc_attr($card['tabs_tab_card_image']['alt'] ?: $card['tabs_tab_card_title']); ?>">
+                                                                                </div>
+                                                                            <?php endif; ?>
+                                                                            
+                                                                            <?php if (!empty($card['tabs_tab_card_title'])) : ?>
+                                                                                <h3 class="tab-card-title">
+                                                                                    <?php echo esc_html($card['tabs_tab_card_title']); ?>
+                                                                                </h3>
+                                                                            <?php endif; ?>
+                                                                            
+                                                                            <?php if (!empty($card['tabs_tab_card_description'])) : ?>
+                                                                                <p class="tab-card-description">
+                                                                                    <?php echo wp_kses_post(nl2br($card['tabs_tab_card_description'])); ?>
+                                                                                </p>
+                                                                            <?php endif; ?>
+                                                                        </div>
+                                                                    <?php endforeach; ?>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                            
+                                                            <?php if (!empty($tab['tabs_tab_paragraph'])) : ?>
+                                                                <div class="tab-paragraph">
+                                                                    <p><?php echo wp_kses_post(nl2br($tab['tabs_tab_paragraph'])); ?></p>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </section>
+                                <?php
+                                break;
+                                
                             // Add more layout cases here as you create them
                             default:
                                 ?>
@@ -290,6 +356,31 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Start auto-slide
     startAutoSlide();
+    
+    // ===================================
+    // TABS FUNCTIONALITY
+    // ===================================
+    
+    // Initialize tabs
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const tabIndex = this.getAttribute('data-tab');
+            
+            // Remove active class from all buttons and panes
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+            
+            // Add active class to clicked button and corresponding pane
+            this.classList.add('active');
+            const targetPane = document.querySelector(`[data-tab-content="${tabIndex}"]`);
+            if (targetPane) {
+                targetPane.classList.add('active');
+            }
+        });
+    });
 });
 </script>
 
