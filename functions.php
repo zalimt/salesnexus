@@ -294,4 +294,169 @@ function salesnexus_create_acf_json_directory() {
         file_put_contents($acf_json_dir . '/.gitignore', $gitignore_content);
     }
 }
-add_action('admin_init', 'salesnexus_create_acf_json_directory'); 
+add_action('admin_init', 'salesnexus_create_acf_json_directory');
+
+/**
+ * SVG Upload Support
+ * Enable SVG uploads with security checks
+ */
+
+/**
+ * Add SVG to allowed upload mime types
+ */
+function salesnexus_allow_svg_uploads($mimes) {
+    $mimes['svg'] = 'image/svg+xml';
+    $mimes['svgz'] = 'image/svg+xml';
+    return $mimes;
+}
+add_filter('upload_mimes', 'salesnexus_allow_svg_uploads');
+
+/**
+ * Fix WordPress handling of SVG files
+ */
+function salesnexus_fix_svg_uploads($data, $file, $filename, $mimes) {
+    $filetype = wp_check_filetype($filename, $mimes);
+    
+    if ($filetype['ext'] === 'svg' || $filetype['type'] === 'image/svg+xml') {
+        $data['ext'] = 'svg';
+        $data['type'] = 'image/svg+xml';
+        $data['proper_filename'] = $filename;
+    }
+    
+    return $data;
+}
+add_filter('wp_check_filetype_and_ext', 'salesnexus_fix_svg_uploads', 10, 4);
+
+/**
+ * Display SVG files properly in WordPress admin
+ */
+function salesnexus_fix_svg_display($response, $attachment, $meta) {
+    if ($response['type'] === 'image' && $response['subtype'] === 'svg+xml') {
+        $response['image'] = array(
+            'src' => $response['url'],
+            'width' => 300,
+            'height' => 150,
+        );
+        
+        $response['thumb'] = array(
+            'src' => $response['url'],
+            'width' => 150,
+            'height' => 75,
+        );
+        
+        $response['sizes'] = array(
+            'full' => array(
+                'url' => $response['url'],
+                'width' => 300,
+                'height' => 150,
+                'orientation' => 'landscape',
+            )
+        );
+    }
+    
+    return $response;
+}
+add_filter('wp_prepare_attachment_for_js', 'salesnexus_fix_svg_display', 10, 3);
+
+/**
+ * Sanitize SVG uploads for security
+ */
+function salesnexus_sanitize_svg($file) {
+    // Only process SVG files
+    if ($file['type'] !== 'image/svg+xml') {
+        return $file;
+    }
+    
+    // Read the SVG file content
+    $svg_content = file_get_contents($file['tmp_name']);
+    
+    if ($svg_content === false) {
+        $file['error'] = 'Could not read SVG file';
+        return $file;
+    }
+    
+    // Basic SVG sanitization - remove potentially dangerous elements
+    $dangerous_tags = array(
+        'script',
+        'object',
+        'embed',
+        'link',
+        'style',
+        'iframe',
+        'frame',
+        'frameset',
+        'form',
+        'input',
+        'button',
+        'textarea',
+        'select'
+    );
+    
+    $dangerous_attributes = array(
+        'onload',
+        'onerror',
+        'onclick',
+        'onmouseover',
+        'onmouseout',
+        'onmousedown',
+        'onmouseup',
+        'onkeydown',
+        'onkeyup',
+        'onkeypress',
+        'onfocus',
+        'onblur',
+        'onchange',
+        'onsubmit',
+        'onreset',
+        'onselect',
+        'onabort',
+        'onunload'
+    );
+    
+    // Remove dangerous tags
+    foreach ($dangerous_tags as $tag) {
+        $svg_content = preg_replace('/<' . $tag . '.*?<\/' . $tag . '>/is', '', $svg_content);
+        $svg_content = preg_replace('/<' . $tag . '.*?\/>/is', '', $svg_content);
+    }
+    
+    // Remove dangerous attributes
+    foreach ($dangerous_attributes as $attr) {
+        $svg_content = preg_replace('/' . $attr . '="[^"]*"/i', '', $svg_content);
+        $svg_content = preg_replace('/' . $attr . "='[^']*'/i", '', $svg_content);
+    }
+    
+    // Remove javascript: protocols
+    $svg_content = preg_replace('/javascript:/i', '', $svg_content);
+    
+    // Remove data: protocols that could contain javascript
+    $svg_content = preg_replace('/data:(?!image\/)/i', '', $svg_content);
+    
+    // Write the sanitized content back to the file
+    file_put_contents($file['tmp_name'], $svg_content);
+    
+    return $file;
+}
+add_filter('wp_handle_upload_prefilter', 'salesnexus_sanitize_svg');
+
+/**
+ * Add CSS to display SVG thumbnails properly in admin
+ */
+function salesnexus_svg_admin_styles() {
+    echo '<style>
+        .attachment-preview .thumbnail img[src$=".svg"] {
+            width: 100% !important;
+            height: auto !important;
+        }
+        
+        .media-icon img[src$=".svg"] {
+            width: 100%;
+            height: auto;
+        }
+        
+        table.media .column-title .media-icon img[src$=".svg"] {
+            width: 60px;
+            height: 60px;
+        }
+    </style>';
+}
+add_action('admin_head', 'salesnexus_svg_admin_styles'); 

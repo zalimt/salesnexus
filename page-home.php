@@ -123,6 +123,68 @@
                                 <?php
                                 break;
                                 
+                            case 'logos_slider':
+                                ?>
+                                <section class="logos-slider-section">
+                                    <div class="container">
+                                        <?php 
+                                        // Try different possible field names
+                                        $logos = null;
+                                        if (isset($section['logos_slide'])) {
+                                            $logos = $section['logos_slide'];
+                                        } elseif (isset($section['logos_slider'])) {
+                                            $logos = $section['logos_slider'];
+                                        } elseif (isset($section['logos'])) {
+                                            $logos = $section['logos'];
+                                        } elseif (isset($section['logo_items'])) {
+                                            $logos = $section['logo_items'];
+                                        } elseif (isset($section['logos_repeater'])) {
+                                            $logos = $section['logos_repeater'];
+                                        }
+                                        
+                                        if ($logos && is_array($logos)) : ?>
+                                            <div class="logos-slider-wrapper">
+                                                <div class="logos-slider-track" id="logos-slider-track">
+                                                    <?php 
+                                                    // Duplicate logos for seamless infinite scroll
+                                                    for ($i = 0; $i < 2; $i++) :
+                                                        foreach ($logos as $logo) : ?>
+                                                            <div class="logo-item">
+                                                                <?php 
+                                                                // Try different possible image field names
+                                                                $logo_image = null;
+                                                                if (isset($logo['logos_slide_logo'])) {
+                                                                    $logo_image = $logo['logos_slide_logo'];
+                                                                } elseif (isset($logo['logo_image'])) {
+                                                                    $logo_image = $logo['logo_image'];
+                                                                } elseif (isset($logo['image'])) {
+                                                                    $logo_image = $logo['image'];
+                                                                } elseif (isset($logo['logo'])) {
+                                                                    $logo_image = $logo['logo'];
+                                                                }
+                                                                
+                                                                if (!empty($logo_image)) : ?>
+                                                                    <img src="<?php echo esc_url($logo_image['sizes']['medium'] ?: $logo_image['url']); ?>" 
+                                                                         alt="<?php echo esc_attr($logo_image['alt'] ?: 'Partner Logo'); ?>"
+                                                                         class="logo-image">
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        <?php endforeach;
+                                                    endfor; ?>
+                                                </div>
+                                            </div>
+                                        <?php else : ?>
+                                            <div class="logos-debug" style="padding: 20px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 4px;">
+                                                <p><strong>Logos Slider Debug Info:</strong></p>
+                                                <p>Available section fields: <?php echo implode(', ', array_keys($section)); ?></p>
+                                                <p>Please check your ACF field structure and update the field name in the template.</p>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </section>
+                                <?php
+                                break;
+                                
                             // Add more layout cases here as you create them
                             default:
                                 ?>
