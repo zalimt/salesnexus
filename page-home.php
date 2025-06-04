@@ -213,31 +213,35 @@
                                                                 <div class="tab-cards-grid">
                                                                     <?php foreach ($tab['tabs_tab_cards'] as $card) : ?>
                                                                         <div class="tab-card">
-                                                                            <?php if (!empty($card['tabs_tab_card_image'])) : ?>
-                                                                                <div class="tab-card-icon">
-                                                                                    <img src="<?php echo esc_url($card['tabs_tab_card_image']['sizes']['thumbnail'] ?: $card['tabs_tab_card_image']['url']); ?>" 
-                                                                                         alt="<?php echo esc_attr($card['tabs_tab_card_image']['alt'] ?: $card['tabs_tab_card_title']); ?>">
-                                                                                </div>
-                                                                            <?php endif; ?>
+                                                                            <div class="tab-card-left">
+                                                                                <?php if (!empty($card['tabs_tab_card_image'])) : ?>
+                                                                                    <div class="tab-card-icon">
+                                                                                        <img src="<?php echo esc_url($card['tabs_tab_card_image']['sizes']['thumbnail'] ?: $card['tabs_tab_card_image']['url']); ?>" 
+                                                                                             alt="<?php echo esc_attr($card['tabs_tab_card_image']['alt'] ?: $card['tabs_tab_card_title']); ?>">
+                                                                                    </div>
+                                                                                <?php endif; ?>
+                                                                            </div>
                                                                             
-                                                                            <?php if (!empty($card['tabs_tab_card_title'])) : ?>
-                                                                                <h3 class="tab-card-title">
-                                                                                    <?php echo esc_html($card['tabs_tab_card_title']); ?>
-                                                                                </h3>
-                                                                            <?php endif; ?>
-                                                                            
-                                                                            <?php if (!empty($card['tabs_tab_card_description'])) : ?>
-                                                                                <p class="tab-card-description">
-                                                                                    <?php echo wp_kses_post(nl2br($card['tabs_tab_card_description'])); ?>
-                                                                                </p>
-                                                                            <?php endif; ?>
+                                                                            <div class="tab-card-right">
+                                                                                <?php if (!empty($card['tabs_tab_card_title'])) : ?>
+                                                                                    <h3 class="tab-card-title t-18 fw-500 font-lexend">
+                                                                                        <?php echo esc_html($card['tabs_tab_card_title']); ?>
+                                                                                    </h3>
+                                                                                <?php endif; ?>
+                                                                                
+                                                                                <?php if (!empty($card['tabs_tab_card_description'])) : ?>
+                                                                                    <p class="tab-card-description t-14 fw-300 font-lexend">
+                                                                                        <?php echo wp_kses_post(nl2br($card['tabs_tab_card_description'])); ?>
+                                                                                    </p>
+                                                                                <?php endif; ?>
+                                                                            </div>
                                                                         </div>
                                                                     <?php endforeach; ?>
                                                                 </div>
                                                             <?php endif; ?>
                                                             
                                                             <?php if (!empty($tab['tabs_tab_paragraph'])) : ?>
-                                                                <div class="tab-paragraph">
+                                                                <div class="tab-paragraph t-40 fw-700 font-caladea">
                                                                     <p><?php echo wp_kses_post(nl2br($tab['tabs_tab_paragraph'])); ?></p>
                                                                 </div>
                                                             <?php endif; ?>
@@ -255,7 +259,7 @@
                                 ?>
                                 <section class="text-block-with-image-section">
                                     <div class="container">
-                                        <div class="tbwi-wrapper">
+                                        <div class="tbwi-wrapper<?php echo !empty($section['direction_tbwi']) ? ' ' . esc_attr($section['direction_tbwi']) : ''; ?>">
                                             <div class="tbwi-content">
                                                 <?php if (!empty($section['heading_tbwi'])) : ?>
                                                     <h2 class="tbwi-heading t-45 fw-700">
@@ -585,6 +589,120 @@
                                                         <p><?php echo wp_kses_post(nl2br($section['span_ctb'])); ?></p>
                                                     </div>
                                                 <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <?php
+                                break;
+                                
+                            case 'hero_centered':
+                                ?>
+                                <section class="hero-centered-section">
+                                    <div class="container">
+                                        <div class="hero-centered-wrapper">
+                                            <?php if (!empty($section['heading_hc'])) : ?>
+                                                <h1 class="hero-centered-heading t-56 fw-700 font-caladea">
+                                                    <?php echo wp_kses_post(nl2br($section['heading_hc'])); ?>
+                                                </h1>
+                                            <?php endif; ?>
+                                            
+                                            <?php if (!empty($section['paragraph_hc'])) : ?>
+                                                <div class="hero-centered-paragraph t-20 fw-300 font-lexend">
+                                                    <p><?php echo wp_kses_post(nl2br($section['paragraph_hc'])); ?></p>
+                                                </div>
+                                            <?php endif; ?>
+                                            
+                                            <?php if (!empty($section['image_hc'])) : ?>
+                                                <div class="hero-centered-image">
+                                                    <img src="<?php echo esc_url($section['image_hc']['sizes']['large'] ?: $section['image_hc']['url']); ?>" 
+                                                         alt="<?php echo esc_attr($section['image_hc']['alt'] ?: 'CRM Interface'); ?>"
+                                                         class="hero-centered-image-main">
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </section>
+                                <?php
+                                break;
+                                
+                            case 'pricing_table':
+                                ?>
+                                <section class="pricing-table-section">
+                                    <div class="container">
+                                        <div class="pricing-table-wrapper">
+                                            <?php if (!empty($section['heading_pt'])) : ?>
+                                                <h2 class="pricing-table-heading t-56 fw-700 font-caladea">
+                                                    <?php echo wp_kses_post(nl2br($section['heading_pt'])); ?>
+                                                </h2>
+                                            <?php endif; ?>
+                                            
+                                            <?php if (!empty($section['description_pt'])) : ?>
+                                                <div class="pricing-table-description t-20 fw-300 font-lexend">
+                                                    <p><?php echo wp_kses_post(nl2br($section['description_pt'])); ?></p>
+                                                </div>
+                                            <?php endif; ?>
+                                            
+                                            <div class="pricing-cards-grid">
+                                                <?php for ($i = 1; $i <= 3; $i++) : ?>
+                                                    <div class="pricing-card <?php echo $i === 2 ? 'featured' : ''; ?>">
+                                                        <?php if (!empty($section["card_tooltip_pt_{$i}"])) : ?>
+                                                            <div class="pricing-card-title t-20 fw-500 font-lexend">
+                                                                <?php echo esc_html($section["card_tooltip_pt_{$i}"]); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                        
+                                                        <?php if (!empty($section["card_price_pt_{$i}"])) : ?>
+                                                            <div class="pricing-card-price">
+                                                                <?php echo wp_kses_post(nl2br($section["card_price_pt_{$i}"])); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                        
+                                                        <?php if (!empty($section["card_btn_text_pt_{$i}"])) : ?>
+                                                            <a href="<?php echo esc_url($section["card_btn_link_pt_{$i}"] ?: '#'); ?>" 
+                                                               class="pricing-card-btn btn-orange t-16 fw-500 font-lexend">
+                                                                <?php echo esc_html($section["card_btn_text_pt_{$i}"]); ?>
+                                                            </a>
+                                                        <?php endif; ?>
+                                                        
+                                                        <?php if (!empty($section["card_seat_pt_{$i}"])) : ?>
+                                                            <div class="pricing-card-seat t-14 fw-400 font-lexend">
+                                                                <?php echo esc_html($section["card_seat_pt_{$i}"]); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                        
+                                                        <?php if (!empty($section["card_for_pt_{$i}"])) : ?>
+                                                            <div class="pricing-card-for t-16 fw-500 font-lexend">
+                                                                <?php echo esc_html($section["card_for_pt_{$i}"]); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                        
+                                                        <?php if (!empty($section["card_includes_pt_{$i}"])) : ?>
+                                                            <div class="pricing-card-includes t-14 fw-500 font-lexend">
+                                                                <?php echo esc_html($section["card_includes_pt_{$i}"]); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                        
+                                                        <?php if (!empty($section["card_bullets_pt_{$i}"])) : ?>
+                                                            <div class="pricing-card-features t-14 fw-400 font-lexend">
+                                                                <?php echo wp_kses_post($section["card_bullets_pt_{$i}"]); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                        
+                                                        <?php if (!empty($section["card_btn_2_text_pt_{$i}"])) : ?>
+                                                            <a href="<?php echo esc_url($section["card_btn_2_link_pt_{$i}"] ?: '#'); ?>" 
+                                                               class="pricing-card-btn-2 btn-orange t-16 fw-500 font-lexend">
+                                                                <?php echo esc_html($section["card_btn_2_text_pt_{$i}"]); ?>
+                                                            </a>
+                                                        <?php endif; ?>
+                                                        
+                                                        <?php if (!empty($section["card_span_pt_{$i}"])) : ?>
+                                                            <div class="pricing-card-span t-12 fw-400 font-lexend">
+                                                                <?php echo wp_kses_post(nl2br($section["card_span_pt_{$i}"])); ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                <?php endfor; ?>
                                             </div>
                                         </div>
                                     </div>
