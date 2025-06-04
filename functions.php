@@ -221,7 +221,10 @@ function salesnexus_theme_setup() {
     register_nav_menus(array(
         'primary' => __('Primary Menu', 'salesnexus'),
         'header' => __('Header Menu', 'salesnexus'),
-        'footer' => __('Footer Menu', 'salesnexus'),
+        'footer-1' => __('Footer 1 (Why SalesNexus)', 'salesnexus'),
+        'footer-2' => __('Footer 2 (Features)', 'salesnexus'),
+        'footer-3' => __('Footer 3 (FAQ)', 'salesnexus'),
+        'footer-4' => __('Footer 4 (Resources)', 'salesnexus'),
         'mobile' => __('Mobile Menu', 'salesnexus'),
     ));
 }

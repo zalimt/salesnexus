@@ -196,7 +196,7 @@
                                                 <!-- Tab Navigation -->
                                                 <div class="tabs-nav">
                                                     <?php foreach ($tabs as $index => $tab) : ?>
-                                                        <button class="tab-btn <?php echo $index === 0 ? 'active' : ''; ?>" 
+                                                        <button class="tab-btn t-20 fw-500 font-lexend <?php echo $index === 0 ? 'active' : ''; ?>" 
                                                                 data-tab="<?php echo $index; ?>">
                                                             <?php echo esc_html($tab['tabs_tab_btn_text'] ?: 'Tab ' . ($index + 1)); ?>
                                                         </button>

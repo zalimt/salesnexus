@@ -16,3 +16,23 @@
         color: white;
     }
 }
+
+.btn-trial {
+    background: transparent;
+    color: $black;
+    padding: 10px 24px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-family: $font-family-primary;
+    font-size: 16px;
+    font-weight: $font-weight-medium;
+    transition: all 0.3s ease;
+    border: 2px solid $black;
+    min-width: fit-content;
+    
+    &:hover {
+        background: $black;
+        color: white;
+        transform: translateY(-1px);
+    }
+}
