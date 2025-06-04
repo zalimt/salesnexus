@@ -1913,17 +1913,16 @@
 
 .pricing-table-section {
     padding: 100px 0;
-    background: #ffffff;
+    background: #fff;
     
     .pricing-table-wrapper {
-        max-width: 1200px;
         margin: 0 auto;
         text-align: center;
         
         .pricing-table-heading {
             color: $black;
-            margin-bottom: 20px;
-            line-height: 1.2;
+            margin: 0 auto 20px;
+            max-width: 900px;
             
             strong {
                 border-bottom: 4px solid $orange;
@@ -1937,8 +1936,8 @@
             margin-right: auto;
             
             p {
-                color: #666666;
-                line-height: 1.6;
+                color: #000;
+                opacity: 0.7;
                 margin: 0;
             }
         }
@@ -1951,13 +1950,16 @@
         margin-top: 60px;
         
         .pricing-card {
-            background: #ffffff;
-            border: 1px solid #e5e7eb;
+            background: #fff;
+            border: 1px solid #e3e3e3;
             border-radius: 12px;
-            padding: 40px 30px;
+            padding: 50px;
             text-align: center;
             transition: all 0.3s ease;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            min-height: 800px;
             
             &.featured {
                 border: 3px solid $orange;
@@ -1976,128 +1978,107 @@
             
             .pricing-card-title {
                 color: $orange;
-                margin-bottom: 20px;
+                margin-bottom: 30px;
+                text-align: left;
                 text-transform: uppercase;
-                letter-spacing: 0.5px;
             }
             
             .pricing-card-price {
                 margin-bottom: 20px;
-                
-                // Style for price display
                 color: $black;
-                
-                // Large price styling
+                font-size: 92px;
+                font-weight: 700;
+                text-align: left;
+
                 strong {
-                    font-size: 48px;
-                    font-weight: 700;
                     color: $black;
-                    line-height: 1;
-                }
-                
-                // "per month" text styling
-                span {
-                    font-size: 14px;
-                    color: #666666;
+                    font-size: 18px;
                     font-weight: 400;
+                    opacity: 0.3;
+                    margin-left: -30px;
                 }
+            }
+            
+            .pricing-card-action-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 20px;
+                gap: 15px;
             }
             
             .pricing-card-btn {
-                display: inline-block;
+                display: inline;
                 background: $orange;
                 color: white;
-                padding: 12px 24px;
-                border-radius: 50px;
-                text-decoration: none;
                 transition: all 0.3s ease;
-                margin-bottom: 15px;
-                border: 2px solid $orange;
-                
-                &:hover {
-                    background: darken($orange, 8%);
-                    border-color: darken($orange, 8%);
-                    transform: translateY(-2px);
-                }
+                margin-bottom: 0;
+                padding: 8px 20px;
+                max-width: fit-content;
+                flex-shrink: 0;
             }
             
             .pricing-card-seat {
-                color: #666666;
-                margin-bottom: 20px;
+                color: #000;
+                margin-bottom: 0;
+                text-align: left;
+                flex: 1;
             }
             
             .pricing-card-for {
                 color: $black;
-                margin-bottom: 15px;
-                font-weight: 500;
+                text-align: left;
+                line-height: 130%;
+                margin-bottom: 30px;
             }
             
             .pricing-card-includes {
-                background: #f8f9fa;
-                color: #666666;
-                padding: 8px 16px;
-                border-radius: 20px;
-                display: inline-block;
+                color: #333;
+                padding: 10px 18px;
+                border-radius: 7px;
+                border: 2px solid #e0e0e0;
                 margin-bottom: 20px;
                 text-transform: uppercase;
-                letter-spacing: 0.5px;
+                max-width: fit-content;
             }
             
             .pricing-card-features {
                 text-align: left;
                 margin-bottom: 30px;
+                flex: 1;
                 
                 ul {
                     list-style: none;
                     padding: 0;
                     margin: 0;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 12px;
                     
                     li {
-                        color: #666666;
-                        margin-bottom: 8px;
-                        padding-left: 0;
-                        line-height: 1.5;
-                        
-                        &:before {
-                            content: '';
-                            display: none;
-                        }
+                        color: #acacac;
                     }
                 }
-                
-                p {
-                    color: #666666;
-                    margin-bottom: 8px;
-                    line-height: 1.5;
-                }
             }
             
-            .pricing-card-btn-2 {
-                display: inline-block;
-                background: $orange;
-                color: white;
-                padding: 12px 24px;
-                border-radius: 50px;
-                text-decoration: none;
-                transition: all 0.3s ease;
-                margin-bottom: 15px;
-                border: 2px solid $orange;
+            .pricing-card-bottom {
+                margin-top: auto;
                 
-                &:hover {
-                    background: darken($orange, 8%);
-                    border-color: darken($orange, 8%);
-                    transform: translateY(-2px);
+                .pricing-card-btn-2 {
+                    margin-right: auto;
+                    display: flex;
+                    max-width: fit-content;
+                    margin-bottom: 20px;
                 }
-            }
-            
-            .pricing-card-span {
-                color: #999999;
-                font-style: italic;
-                margin-top: 10px;
                 
-                p {
-                    margin: 0;
-                    line-height: 1.4;
+                .pricing-card-span {
+                    color: #000;
+                    margin-top: 10px;
+                    text-align: left;
+                    
+                    p {
+                        margin: 0;
+                    }
                 }
             }
         }

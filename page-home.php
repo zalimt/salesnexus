@@ -647,7 +647,7 @@
                                                 <?php for ($i = 1; $i <= 3; $i++) : ?>
                                                     <div class="pricing-card <?php echo $i === 2 ? 'featured' : ''; ?>">
                                                         <?php if (!empty($section["card_tooltip_pt_{$i}"])) : ?>
-                                                            <div class="pricing-card-title t-20 fw-500 font-lexend">
+                                                            <div class="pricing-card-title t-28 fw-600 font-lexend">
                                                                 <?php echo esc_html($section["card_tooltip_pt_{$i}"]); ?>
                                                             </div>
                                                         <?php endif; ?>
@@ -658,49 +658,53 @@
                                                             </div>
                                                         <?php endif; ?>
                                                         
-                                                        <?php if (!empty($section["card_btn_text_pt_{$i}"])) : ?>
-                                                            <a href="<?php echo esc_url($section["card_btn_link_pt_{$i}"] ?: '#'); ?>" 
-                                                               class="pricing-card-btn btn-orange t-16 fw-500 font-lexend">
-                                                                <?php echo esc_html($section["card_btn_text_pt_{$i}"]); ?>
-                                                            </a>
-                                                        <?php endif; ?>
-                                                        
-                                                        <?php if (!empty($section["card_seat_pt_{$i}"])) : ?>
-                                                            <div class="pricing-card-seat t-14 fw-400 font-lexend">
-                                                                <?php echo esc_html($section["card_seat_pt_{$i}"]); ?>
-                                                            </div>
-                                                        <?php endif; ?>
+                                                        <div class="pricing-card-action-row">
+                                                            <?php if (!empty($section["card_btn_text_pt_{$i}"])) : ?>
+                                                                <a href="<?php echo esc_url($section["card_btn_link_pt_{$i}"] ?: '#'); ?>" 
+                                                                   class="pricing-card-btn btn-orange t-18 fw-700 font-lexend">
+                                                                    <?php echo esc_html($section["card_btn_text_pt_{$i}"]); ?>
+                                                                </a>
+                                                            <?php endif; ?>
+                                                            
+                                                            <?php if (!empty($section["card_seat_pt_{$i}"])) : ?>
+                                                                <div class="pricing-card-seat t-16 fw-400 font-lexend">
+                                                                    <?php echo esc_html($section["card_seat_pt_{$i}"]); ?>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                        </div>
                                                         
                                                         <?php if (!empty($section["card_for_pt_{$i}"])) : ?>
-                                                            <div class="pricing-card-for t-16 fw-500 font-lexend">
+                                                            <div class="pricing-card-for t-19 fw-600 font-lexend">
                                                                 <?php echo esc_html($section["card_for_pt_{$i}"]); ?>
                                                             </div>
                                                         <?php endif; ?>
                                                         
                                                         <?php if (!empty($section["card_includes_pt_{$i}"])) : ?>
-                                                            <div class="pricing-card-includes t-14 fw-500 font-lexend">
+                                                            <div class="pricing-card-includes t-15 fw-500 font-lexend">
                                                                 <?php echo esc_html($section["card_includes_pt_{$i}"]); ?>
                                                             </div>
                                                         <?php endif; ?>
                                                         
                                                         <?php if (!empty($section["card_bullets_pt_{$i}"])) : ?>
-                                                            <div class="pricing-card-features t-14 fw-400 font-lexend">
+                                                            <div class="pricing-card-features t-15 fw-500 font-lexend">
                                                                 <?php echo wp_kses_post($section["card_bullets_pt_{$i}"]); ?>
                                                             </div>
                                                         <?php endif; ?>
                                                         
-                                                        <?php if (!empty($section["card_btn_2_text_pt_{$i}"])) : ?>
-                                                            <a href="<?php echo esc_url($section["card_btn_2_link_pt_{$i}"] ?: '#'); ?>" 
-                                                               class="pricing-card-btn-2 btn-orange t-16 fw-500 font-lexend">
-                                                                <?php echo esc_html($section["card_btn_2_text_pt_{$i}"]); ?>
-                                                            </a>
-                                                        <?php endif; ?>
-                                                        
-                                                        <?php if (!empty($section["card_span_pt_{$i}"])) : ?>
-                                                            <div class="pricing-card-span t-12 fw-400 font-lexend">
-                                                                <?php echo wp_kses_post(nl2br($section["card_span_pt_{$i}"])); ?>
-                                                            </div>
-                                                        <?php endif; ?>
+                                                        <div class="pricing-card-bottom">
+                                                            <?php if (!empty($section["card_btn_2_text_pt_{$i}"])) : ?>
+                                                                <a href="<?php echo esc_url($section["card_btn_2_link_pt_{$i}"] ?: '#'); ?>" 
+                                                                   class="pricing-card-btn-2 btn-orange t-18 fw-700 font-lexend">
+                                                                    <?php echo esc_html($section["card_btn_2_text_pt_{$i}"]); ?>
+                                                                </a>
+                                                            <?php endif; ?>
+                                                            
+                                                            <?php if (!empty($section["card_span_pt_{$i}"])) : ?>
+                                                                <div class="pricing-card-span t-16 fw-400 font-lexend">
+                                                                    <?php echo wp_kses_post(nl2br($section["card_span_pt_{$i}"])); ?>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                        </div>
                                                     </div>
                                                 <?php endfor; ?>
                                             </div>
