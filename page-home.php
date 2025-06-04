@@ -39,13 +39,15 @@
                         
                         switch ($layout) {
                             case 'hero_slider':
+                                $hero_slider_index = $hero_slider_index ?? 0;
+                                $hero_slider_index++;
                                 ?>
                                 <section class="hero-slider-section">
                                     <div class="hero-slider-container">
                                         <?php 
                                         $slides = $section['hero_slider_slide'];
                                         if ($slides) : ?>
-                                            <div class="hero-slider" id="hero-slider">
+                                            <div class="hero-slider" id="hero-slider-<?php echo $hero_slider_index; ?>">
                                                 <?php foreach ($slides as $index => $slide) : ?>
                                                     <div class="hero-slide <?php echo $index === 0 ? 'active' : ''; ?>">
                                                         <div class="container">
@@ -397,6 +399,8 @@
                                 break;
                                 
                             case 'text_block_with_image_slider':
+                                $tbwis_index = $tbwis_index ?? 0;
+                                $tbwis_index++;
                                 ?>
                                 <section class="text-block-with-image-slider-section">
                                     <div class="container">
@@ -404,7 +408,7 @@
                                         $slides = $section['text_block_with_image_slider_slide'];
                                         if ($slides && is_array($slides)) : ?>
                                             <div class="tbwis-slider-wrapper">
-                                                <div class="tbwis-slider" id="tbwis-slider">
+                                                <div class="tbwis-slider" id="tbwis-slider-<?php echo $tbwis_index; ?>">
                                                     <?php foreach ($slides as $index => $slide) : ?>
                                                         <div class="tbwis-slide <?php echo $index === 0 ? 'active' : ''; ?>" data-slide="<?php echo $index; ?>">
                                                             <div class="tbwis-content-wrapper">
@@ -457,6 +461,8 @@
                                 break;
                                 
                             case 'testimonials':
+                                $testimonials_index = $testimonials_index ?? 0;
+                                $testimonials_index++;
                                 ?>
                                 <section class="testimonials-section">
                                     <div class="container">
@@ -464,7 +470,7 @@
                                         $testimonials = $section['testimonial'];
                                         if ($testimonials && is_array($testimonials)) : ?>
                                             <div class="testimonials-slider-wrapper">
-                                                <div class="testimonials-slider" id="testimonials-slider">
+                                                <div class="testimonials-slider" id="testimonials-slider-<?php echo $testimonials_index; ?>">
                                                     <?php foreach ($testimonials as $index => $testimonial) : ?>
                                                         <div class="testimonial-slide <?php echo $index === 0 ? 'active' : ''; ?>" data-slide="<?php echo $index; ?>">
                                                             <div class="testimonial-content">
@@ -756,92 +762,111 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const heroSlider = document.getElementById('hero-slider');
-    if (!heroSlider) return;
+    // ===================================
+    // HERO SLIDER FUNCTIONALITY
+    // ===================================
+
+    // Find all hero sliders and initialize each one
+    const heroSliders = document.querySelectorAll('.hero-slider');
     
-    const slides = heroSlider.querySelectorAll('.hero-slide');
-    const dots = document.querySelectorAll('.slider-dot');
-    const prevButton = document.querySelector('.slider-prev');
-    const nextButton = document.querySelector('.slider-next');
-    
-    if (slides.length <= 1) return; // No need for slider functionality with one slide
-    
-    let currentSlide = 0;
-    let slideInterval;
-    
-    function showSlide(index) {
-        // Hide all slides
-        slides.forEach(slide => slide.classList.remove('active'));
+    heroSliders.forEach((heroSlider) => {
+        if (!heroSlider) return;
         
-        // Remove active class from all dots
-        dots.forEach(dot => dot.classList.remove('active'));
+        const slides = heroSlider.querySelectorAll('.hero-slide');
+        const heroSliderContainer = heroSlider.closest('.hero-slider-container');
+        const dots = heroSliderContainer ? heroSliderContainer.querySelectorAll('.slider-dot') : [];
+        const prevButton = heroSliderContainer ? heroSliderContainer.querySelector('.slider-prev') : null;
+        const nextButton = heroSliderContainer ? heroSliderContainer.querySelector('.slider-next') : null;
         
-        // Show current slide
-        slides[index].classList.add('active');
-        if (dots[index]) dots[index].classList.add('active');
+        if (slides.length <= 1) return; // No need for slider functionality with one slide
         
-        currentSlide = index;
-    }
-    
-    function nextSlide() {
-        const next = (currentSlide + 1) % slides.length;
-        showSlide(next);
-    }
-    
-    function prevSlide() {
-        const prev = (currentSlide - 1 + slides.length) % slides.length;
-        showSlide(prev);
-    }
-    
-    function startAutoSlide() {
-        slideInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
-    }
-    
-    function stopAutoSlide() {
-        clearInterval(slideInterval);
-    }
-    
-    // Event listeners
-    if (nextButton) nextButton.addEventListener('click', () => { stopAutoSlide(); nextSlide(); startAutoSlide(); });
-    if (prevButton) prevButton.addEventListener('click', () => { stopAutoSlide(); prevSlide(); startAutoSlide(); });
-    
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            stopAutoSlide();
-            showSlide(index);
-            startAutoSlide();
+        let currentSlide = 0;
+        let slideInterval;
+        
+        function showSlide(index) {
+            // Hide all slides in this specific slider
+            slides.forEach(slide => slide.classList.remove('active'));
+            
+            // Remove active class from all dots in this specific slider
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            // Show current slide
+            if (slides[index]) {
+                slides[index].classList.add('active');
+            }
+            if (dots[index]) {
+                dots[index].classList.add('active');
+            }
+            
+            currentSlide = index;
+        }
+        
+        function nextSlide() {
+            const next = (currentSlide + 1) % slides.length;
+            showSlide(next);
+        }
+        
+        function prevSlide() {
+            const prev = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(prev);
+        }
+        
+        function startAutoSlide() {
+            slideInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+        }
+        
+        function stopAutoSlide() {
+            clearInterval(slideInterval);
+        }
+        
+        // Event listeners for this specific slider
+        if (nextButton) nextButton.addEventListener('click', () => { stopAutoSlide(); nextSlide(); startAutoSlide(); });
+        if (prevButton) prevButton.addEventListener('click', () => { stopAutoSlide(); prevSlide(); startAutoSlide(); });
+        
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                stopAutoSlide();
+                showSlide(index);
+                startAutoSlide();
+            });
         });
+        
+        // Pause auto-slide on hover for this specific slider
+        heroSlider.addEventListener('mouseenter', stopAutoSlide);
+        heroSlider.addEventListener('mouseleave', startAutoSlide);
+        
+        // Start auto-slide for this specific slider
+        startAutoSlide();
     });
-    
-    // Pause auto-slide on hover
-    heroSlider.addEventListener('mouseenter', stopAutoSlide);
-    heroSlider.addEventListener('mouseleave', startAutoSlide);
-    
-    // Start auto-slide
-    startAutoSlide();
-    
+
     // ===================================
     // TABS FUNCTIONALITY
     // ===================================
     
-    // Initialize tabs
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    const tabPanes = document.querySelectorAll('.tab-pane');
+    // Find all tabs wrappers and initialize each one
+    const tabsWrappers = document.querySelectorAll('.tabs-wrapper');
     
-    tabButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const tabIndex = this.getAttribute('data-tab');
-            
-            // Remove active class from all buttons and panes
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            tabPanes.forEach(pane => pane.classList.remove('active'));
-            
-            // Add active class to clicked button and corresponding pane
-            this.classList.add('active');
-            const targetPane = document.querySelector(`[data-tab-content="${tabIndex}"]`);
-            if (targetPane) {
-                targetPane.classList.add('active');
-            }
+    tabsWrappers.forEach((tabsWrapper) => {
+        if (!tabsWrapper) return;
+        
+        const tabButtons = tabsWrapper.querySelectorAll('.tab-btn');
+        const tabPanes = tabsWrapper.querySelectorAll('.tab-pane');
+        
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const tabIndex = this.getAttribute('data-tab');
+                
+                // Remove active class from all buttons and panes in this specific wrapper
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabPanes.forEach(pane => pane.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding pane in this wrapper
+                this.classList.add('active');
+                const targetPane = tabsWrapper.querySelector(`[data-tab-content="${tabIndex}"]`);
+                if (targetPane) {
+                    targetPane.classList.add('active');
+                }
+            });
         });
     });
     
@@ -885,17 +910,21 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===================================
     // TEXT BLOCK WITH IMAGE SLIDER (TBWIS)
     // ===================================
+
+    // Find all TBWIS sliders and initialize each one
+    const tbwisSliders = document.querySelectorAll('.tbwis-slider');
     
-    // Initialize TBWIS slider
-    const tbwisSlider = document.getElementById('tbwis-slider');
-    if (tbwisSlider) {
+    tbwisSliders.forEach((tbwisSlider) => {
+        if (!tbwisSlider) return;
+        
         const tbwisSlides = tbwisSlider.querySelectorAll('.tbwis-slide');
-        const tbwisNextButtons = document.querySelectorAll('[data-next-slide-tbwis]');
+        const tbwisWrapper = tbwisSlider.closest('.tbwis-slider-wrapper');
+        const tbwisNextButtons = tbwisWrapper ? tbwisWrapper.querySelectorAll('[data-next-slide-tbwis]') : [];
         
         let currentTbwisSlide = 0;
         
         function showTbwisSlide(index) {
-            // Hide all slides
+            // Hide all slides in this specific slider
             tbwisSlides.forEach(slide => slide.classList.remove('active'));
             
             // Show current slide
@@ -911,38 +940,46 @@ document.addEventListener('DOMContentLoaded', function() {
             showTbwisSlide(next);
         }
         
-        // Add click event to all next buttons
+        // Add click event to all next buttons in this specific slider
         tbwisNextButtons.forEach(button => {
             button.addEventListener('click', () => {
                 nextTbwisSlide();
             });
         });
-    }
+    });
 
     // ===================================
     // TESTIMONIALS FUNCTIONALITY
     // ===================================
 
-    const testimonialsSlider = document.getElementById('testimonials-slider');
-    if (testimonialsSlider) {
+    // Find all testimonials sliders and initialize each one
+    const testimonialsSliders = document.querySelectorAll('.testimonials-slider');
+    
+    testimonialsSliders.forEach((testimonialsSlider) => {
+        if (!testimonialsSlider) return;
+        
         const testimonialsSlides = testimonialsSlider.querySelectorAll('.testimonial-slide');
-        const testimonialsDots = document.querySelectorAll('.testimonial-dot');
-        const testimonialsNav = document.querySelector('.testimonials-nav');
-        const testimonialsNavDots = document.querySelector('.testimonials-dots');
+        const testimonialsWrapper = testimonialsSlider.closest('.testimonials-slider-wrapper');
+        const testimonialsNav = testimonialsWrapper ? testimonialsWrapper.querySelector('.testimonials-nav') : null;
+        const testimonialsDots = testimonialsWrapper ? testimonialsWrapper.querySelectorAll('.testimonial-dot') : [];
 
         let currentTestimonial = 0;
         let testimonialInterval;
 
         function showTestimonial(index) {
-            // Hide all slides
+            // Hide all slides in this specific slider
             testimonialsSlides.forEach(slide => slide.classList.remove('active'));
             
-            // Remove active class from all dots
+            // Remove active class from all dots in this specific slider
             testimonialsDots.forEach(dot => dot.classList.remove('active'));
             
             // Show current slide
-            testimonialsSlides[index].classList.add('active');
-            if (testimonialsDots[index]) testimonialsDots[index].classList.add('active');
+            if (testimonialsSlides[index]) {
+                testimonialsSlides[index].classList.add('active');
+            }
+            if (testimonialsDots[index]) {
+                testimonialsDots[index].classList.add('active');
+            }
             
             currentTestimonial = index;
         }
@@ -965,23 +1002,25 @@ document.addEventListener('DOMContentLoaded', function() {
             clearInterval(testimonialInterval);
         }
 
-        // Event listeners
+        // Event listeners for this specific slider
         if (testimonialsNav) {
             testimonialsNav.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = e.target.closest('.testimonial-dot');
                 if (target) {
                     stopTestimonialAutoSlide();
-                    const index = target.getAttribute('data-slide');
+                    const index = parseInt(target.getAttribute('data-slide'));
                     showTestimonial(index);
                     startTestimonialAutoSlide();
                 }
             });
         }
 
-        // Start auto-slide
-        startTestimonialAutoSlide();
-    }
+        // Start auto-slide for this specific slider
+        if (testimonialsSlides.length > 1) {
+            startTestimonialAutoSlide();
+        }
+    });
 });
 </script>
 
