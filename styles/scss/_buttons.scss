@@ -1,5 +1,18 @@
-/*
- * Button Styles
- */
+.btn-orange {
+    background-color: $orange;
+    color: #fff;
+    border: 2px solid $orange;
+    border-radius: 50px;
+    padding: 10px 24px;
+    text-decoration: none;
+    font-family: $font-family-primary;
+    min-width: fit-content;
+    transition: all 0.3s ease;
 
-// Add your button styles here 
+    &:hover {
+        background-color: darken($primary-color, 10%);
+        border-color: darken($primary-color, 10%);
+        transform: translateY(-1px);
+        color: white;
+    }
+}

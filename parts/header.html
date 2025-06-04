@@ -1,5 +1,42 @@
-<div class="header">
+<header class="site-header">
     <div class="container">
-        <p>Header</p>
+        <div class="header-wrapper">
+            <!-- Logo Section -->
+            <div class="site-branding">
+                <?php if (function_exists('the_custom_logo') && has_custom_logo()) : ?>
+                    <?php the_custom_logo(); ?>
+                <?php else : ?>
+                    <a href="<?php echo esc_url(home_url('/')); ?>" class="site-title">
+                        <?php bloginfo('name'); ?>
+                    </a>
+                <?php endif; ?>
+            </div>
+            
+            <!-- Navigation Menu -->
+            <nav class="main-navigation" role="navigation">
+                <?php
+                if (has_nav_menu('primary')) {
+                    wp_nav_menu(array(
+                        'theme_location' => 'primary',
+                        'menu_class'     => 'primary-menu',
+                        'container'      => false,
+                        'fallback_cb'    => false,
+                    ));
+                } else {
+                    // Fallback if no menu is assigned
+                    echo '<div class="no-menu-notice">';
+                    echo '<p>Please assign a menu to the Primary Menu location in <a href="' . admin_url('nav-menus.php') . '">Appearance > Menus</a>.</p>';
+                    echo '</div>';
+                }
+                ?>
+            </nav>
+            
+            <!-- Mobile Menu Toggle -->
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
     </div>
-</div>
+</header>

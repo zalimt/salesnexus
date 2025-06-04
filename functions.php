@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
  */
 function salesnexus_enqueue_google_fonts() {
     // Google Fonts URL with Lexend Deca and Caladea
-    $fonts_url = 'https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&family=Caladea:wght@700&display=swap';
+    $fonts_url = 'https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;500;600;700&family=Caladea:wght@400;700&display=swap';
     
     wp_enqueue_style(
         'salesnexus-google-fonts',
@@ -193,8 +193,100 @@ function salesnexus_theme_setup() {
     
     // Add support for custom logo
     add_theme_support('custom-logo');
+    
+    // Add support for navigation menus
+    add_theme_support('menus');
+    
+    // Add support for widgets
+    add_theme_support('widgets');
+    
+    // Add support for post thumbnails
+    add_theme_support('post-thumbnails');
+    
+    // Add support for title tag
+    add_theme_support('title-tag');
+    
+    // Add support for HTML5 markup
+    add_theme_support('html5', array(
+        'search-form',
+        'comment-form',
+        'comment-list',
+        'gallery',
+        'caption',
+        'style',
+        'script'
+    ));
+    
+    // Register navigation menus
+    register_nav_menus(array(
+        'primary' => __('Primary Menu', 'salesnexus'),
+        'header' => __('Header Menu', 'salesnexus'),
+        'footer' => __('Footer Menu', 'salesnexus'),
+        'mobile' => __('Mobile Menu', 'salesnexus'),
+    ));
 }
 add_action('after_setup_theme', 'salesnexus_theme_setup');
+
+/**
+ * Register widget areas
+ */
+function salesnexus_widgets_init() {
+    // Primary sidebar
+    register_sidebar(array(
+        'name'          => __('Primary Sidebar', 'salesnexus'),
+        'id'            => 'sidebar-1',
+        'description'   => __('Add widgets here for the primary sidebar.', 'salesnexus'),
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</section>',
+        'before_title'  => '<h2 class="widget-title">',
+        'after_title'   => '</h2>',
+    ));
+    
+    // Footer widget area 1
+    register_sidebar(array(
+        'name'          => __('Footer 1', 'salesnexus'),
+        'id'            => 'footer-1',
+        'description'   => __('Add widgets here for the first footer column.', 'salesnexus'),
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</section>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ));
+    
+    // Footer widget area 2
+    register_sidebar(array(
+        'name'          => __('Footer 2', 'salesnexus'),
+        'id'            => 'footer-2',
+        'description'   => __('Add widgets here for the second footer column.', 'salesnexus'),
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</section>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ));
+    
+    // Footer widget area 3
+    register_sidebar(array(
+        'name'          => __('Footer 3', 'salesnexus'),
+        'id'            => 'footer-3',
+        'description'   => __('Add widgets here for the third footer column.', 'salesnexus'),
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</section>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ));
+    
+    // Footer widget area 4
+    register_sidebar(array(
+        'name'          => __('Footer 4', 'salesnexus'),
+        'id'            => 'footer-4',
+        'description'   => __('Add widgets here for the fourth footer column.', 'salesnexus'),
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</section>',
+        'before_title'  => '<h3 class="widget-title">',
+        'after_title'   => '</h3>',
+    ));
+}
+add_action('widgets_init', 'salesnexus_widgets_init');
 
 /**
  * Clear any WordPress caching for development

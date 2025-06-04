@@ -67,7 +67,7 @@
                                                                         <div class="hero-buttons">
                                                                             <?php if (!empty($slide['btn_1_text_hero_slider_slide'])) : ?>
                                                                                 <a href="<?php echo esc_url($slide['btn_1_link_hero_slider_slide'] ?: '#'); ?>" 
-                                                                                   class="btn btn-primary btn-demo">
+                                                                                   class="btn-orange btn-demo t-20 fw-500">
                                                                                     <?php echo esc_html($slide['btn_1_text_hero_slider_slide']); ?>
                                                                                 </a>
                                                                             <?php endif; ?>
@@ -251,6 +251,347 @@
                                 <?php
                                 break;
                                 
+                            case 'text_block_with_image':
+                                ?>
+                                <section class="text-block-with-image-section">
+                                    <div class="container">
+                                        <div class="tbwi-wrapper">
+                                            <div class="tbwi-content">
+                                                <?php if (!empty($section['heading_tbwi'])) : ?>
+                                                    <h2 class="tbwi-heading t-45 fw-700">
+                                                        <?php echo esc_html($section['heading_tbwi']); ?>
+                                                    </h2>
+                                                <?php endif; ?>
+                                                
+                                                <?php if (!empty($section['paragraph_tbwi'])) : ?>
+                                                    <div class="tbwi-paragraph t-18 fw-300">
+                                                        <p><?php echo wp_kses_post(nl2br($section['paragraph_tbwi'])); ?></p>
+                                                    </div>
+                                                <?php endif; ?>
+                                                
+                                                <?php if (!empty($section['btn_1_text_tbwi']) || !empty($section['btn_2_text_tbwi'])) : ?>
+                                                    <div class="tbwi-buttons">
+                                                        <?php if (!empty($section['btn_1_text_tbwi'])) : ?>
+                                                            <a href="<?php echo esc_url($section['btn_1_link_tbwi'] ?: '#'); ?>" 
+                                                               class="btn-orange tbwi-btn-primary t-20 fw-500">
+                                                                <?php echo esc_html($section['btn_1_text_tbwi']); ?>
+                                                            </a>
+                                                        <?php endif; ?>
+                                                        
+                                                        <?php if (!empty($section['btn_2_text_tbwi'])) : ?>
+                                                            <a href="<?php echo esc_url($section['btn_2_link_tbwi'] ?: '#'); ?>" 
+                                                               class="btn btn-link tbwi-btn-link t-19 fw-500">
+                                                                <?php echo esc_html($section['btn_2_text_tbwi']); ?>
+                                                                <span class="arrow">→</span>
+                                                            </a>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                            
+                                            <?php if (!empty($section['image_tbwi'])) : ?>
+                                                <div class="tbwi-image">
+                                                    <div class="tbwi-image-container">
+                                                        <img src="<?php echo esc_url($section['image_tbwi']['sizes']['large'] ?: $section['image_tbwi']['url']); ?>" 
+                                                             alt="<?php echo esc_attr($section['image_tbwi']['alt'] ?: 'CRM Automation'); ?>"
+                                                             class="tbwi-image-main">
+                                                    </div>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </section>
+                                <?php
+                                break;
+                                
+                            case 'text_block_with_cards_and_image':
+                                ?>
+                                <section class="text-block-with-cards-and-image-section">
+                                    <div class="container">
+                                        <?php 
+                                        $slides = $section['slide_tbci'];
+                                        if ($slides && is_array($slides)) : ?>
+                                            <div class="tbci-slider-wrapper">
+                                                <div class="tbci-slider" id="tbci-slider">
+                                                    <?php foreach ($slides as $index => $slide) : ?>
+                                                        <div class="tbci-slide <?php echo $index === 0 ? 'active' : ''; ?>" data-slide="<?php echo $index; ?>">
+                                                            <div class="tbci-content-wrapper">
+                                                                <div class="tbci-content">
+                                                                    <?php if (!empty($slide['logo_tbci'])) : ?>
+                                                                        <div class="tbci-logo">
+                                                                            <img src="<?php echo esc_url($slide['logo_tbci']['sizes']['medium'] ?: $slide['logo_tbci']['url']); ?>" 
+                                                                                 alt="<?php echo esc_attr($slide['logo_tbci']['alt'] ?: 'Company Logo'); ?>">
+                                                                        </div>
+                                                                    <?php endif; ?>
+                                                                    
+                                                                    <?php if (!empty($slide['heading_tbci'])) : ?>
+                                                                        <h2 class="tbci-heading font-lexend t-32 fw-700">
+                                                                            <?php echo esc_html($slide['heading_tbci']); ?>
+                                                                        </h2>
+                                                                    <?php endif; ?>
+                                                                    
+                                                                    <?php if (!empty($slide['paragraph_tbci'])) : ?>
+                                                                        <div class="tbci-paragraph font-lexend t-17 fw-300">
+                                                                            <p><?php echo wp_kses_post(nl2br($slide['paragraph_tbci'])); ?></p>
+                                                                        </div>
+                                                                    <?php endif; ?>
+                                                                    
+                                                                    <div class="tbci-cards">
+                                                                        <?php for ($i = 1; $i <= 4; $i++) : 
+                                                                            $number = $slide["card_{$i}_number_tbci"] ?? '';
+                                                                            $description = $slide["card_{$i}_description_tbci"] ?? '';
+                                                                            if (!empty($number) || !empty($description)) : ?>
+                                                                                <div class="tbci-card">
+                                                                                    <?php if (!empty($number)) : ?>
+                                                                                        <div class="tbci-card-number t-31 fw-700">
+                                                                                            <?php echo esc_html($number); ?>
+                                                                                        </div>
+                                                                                    <?php endif; ?>
+                                                                                    <?php if (!empty($description)) : ?>
+                                                                                        <div class="tbci-card-description t-14 fw-400">
+                                                                                            <?php echo wp_kses_post(nl2br($description)); ?>
+                                                                                        </div>
+                                                                                    <?php endif; ?>
+                                                                                </div>
+                                                                            <?php endif;
+                                                                        endfor; ?>
+                                                                    </div>
+                                                                    
+                                                                    <div class="tbci-buttons">
+                                                                        <?php if (!empty($slide['btn_1_text_tbci'])) : ?>
+                                                                            <a href="<?php echo esc_url($slide['btn_1_link_tbci'] ?: '#'); ?>" 
+                                                                               class="btn-orange tbci-btn-primary t-19 fw-500">
+                                                                                <?php echo esc_html($slide['btn_1_text_tbci']); ?>
+                                                                            </a>
+                                                                        <?php endif; ?>
+                                                                        
+                                                                        <?php if (!empty($slide['btn_2_text_tbci'])) : ?>
+                                                                            <button class="tbci-btn-next t-19 fw-600" data-next-slide>
+                                                                                <?php echo esc_html($slide['btn_2_text_tbci']); ?>
+                                                                                <span class="arrow">→</span>
+                                                                            </button>
+                                                                        <?php endif; ?>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <?php if (!empty($slide['image_tbci'])) : ?>
+                                                                    <div class="tbci-image">
+                                                                        <img src="<?php echo esc_url($slide['image_tbci']['sizes']['large'] ?: $slide['image_tbci']['url']); ?>" 
+                                                                             alt="<?php echo esc_attr($slide['image_tbci']['alt'] ?: 'Case Study Image'); ?>"
+                                                                             class="tbci-image-main">
+                                                                    </div>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </section>
+                                <?php
+                                break;
+                                
+                            case 'text_block_with_image_slider':
+                                ?>
+                                <section class="text-block-with-image-slider-section">
+                                    <div class="container">
+                                        <?php 
+                                        $slides = $section['text_block_with_image_slider_slide'];
+                                        if ($slides && is_array($slides)) : ?>
+                                            <div class="tbwis-slider-wrapper">
+                                                <div class="tbwis-slider" id="tbwis-slider">
+                                                    <?php foreach ($slides as $index => $slide) : ?>
+                                                        <div class="tbwis-slide <?php echo $index === 0 ? 'active' : ''; ?>" data-slide="<?php echo $index; ?>">
+                                                            <div class="tbwis-content-wrapper">
+                                                                <div class="tbwis-content">
+                                                                    <?php if (!empty($slide['heading_tbwi'])) : ?>
+                                                                        <h2 class="tbwis-heading t-45 fw-700">
+                                                                            <?php echo esc_html($slide['heading_tbwi']); ?>
+                                                                        </h2>
+                                                                    <?php endif; ?>
+                                                                    
+                                                                    <?php if (!empty($slide['paragraph_tbwi'])) : ?>
+                                                                        <div class="tbwis-paragraph t-18 fw-300">
+                                                                            <p><?php echo wp_kses_post(nl2br($slide['paragraph_tbwi'])); ?></p>
+                                                                        </div>
+                                                                    <?php endif; ?>
+                                                                    
+                                                                    <div class="tbwis-buttons">
+                                                                        <?php if (!empty($slide['btn_1_text_tbwi'])) : ?>
+                                                                            <a href="<?php echo esc_url($slide['btn_1_link_tbwi'] ?: '#'); ?>" 
+                                                                               class="btn-orange tbwis-btn-primary t-20 fw-500">
+                                                                                <?php echo esc_html($slide['btn_1_text_tbwi']); ?>
+                                                                            </a>
+                                                                        <?php endif; ?>
+                                                                        
+                                                                        <?php if (!empty($slide['btn_2_text_tbwi'])) : ?>
+                                                                            <button class="tbwis-btn-next t-19 fw-500" data-next-slide-tbwis>
+                                                                                <?php echo esc_html($slide['btn_2_text_tbwi']); ?>
+                                                                                <span class="arrow">→</span>
+                                                                            </button>
+                                                                        <?php endif; ?>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                                <?php if (!empty($slide['image_tbwi'])) : ?>
+                                                                    <div class="tbwis-image">
+                                                                        <img src="<?php echo esc_url($slide['image_tbwi']['sizes']['large'] ?: $slide['image_tbwi']['url']); ?>" 
+                                                                             alt="<?php echo esc_attr($slide['image_tbwi']['alt'] ?: 'Featured Image'); ?>"
+                                                                             class="tbwis-image-main">
+                                                                    </div>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </section>
+                                <?php
+                                break;
+                                
+                            case 'testimonials':
+                                ?>
+                                <section class="testimonials-section">
+                                    <div class="container">
+                                        <?php 
+                                        $testimonials = $section['testimonial'];
+                                        if ($testimonials && is_array($testimonials)) : ?>
+                                            <div class="testimonials-slider-wrapper">
+                                                <div class="testimonials-slider" id="testimonials-slider">
+                                                    <?php foreach ($testimonials as $index => $testimonial) : ?>
+                                                        <div class="testimonial-slide <?php echo $index === 0 ? 'active' : ''; ?>" data-slide="<?php echo $index; ?>">
+                                                            <div class="testimonial-content">
+                                                                <?php if (!empty($testimonial['testimonial_photo'])) : ?>
+                                                                    <div class="testimonial-photo">
+                                                                        <img src="<?php echo esc_url($testimonial['testimonial_photo']['sizes']['medium'] ?: $testimonial['testimonial_photo']['url']); ?>" 
+                                                                             alt="<?php echo esc_attr($testimonial['testimonial_photo']['alt'] ?: $testimonial['testimonial_name']); ?>"
+                                                                             class="testimonial-photo-img">
+                                                                    </div>
+                                                                <?php endif; ?>
+                                                                
+                                                                <?php if (!empty($testimonial['testimonial_paragraph'])) : ?>
+                                                                    <div class="testimonial-text t-28 fw-300">
+                                                                        <p><?php echo wp_kses_post(nl2br($testimonial['testimonial_paragraph'])); ?></p>
+                                                                    </div>
+                                                                <?php endif; ?>
+                                                                
+                                                                <?php if (!empty($testimonial['testimonial_name'])) : ?>
+                                                                    <div class="testimonial-author">
+                                                                        <h4 class="testimonial-name t-31 fw-700 font-caladea"><?php echo esc_html($testimonial['testimonial_name']); ?></h4>
+                                                                        <?php if (!empty($testimonial['testimonial_position'])) : ?>
+                                                                            <p class="testimonial-position font-caladea t-25 fw-400"><?php echo esc_html($testimonial['testimonial_position']); ?></p>
+                                                                        <?php endif; ?>
+                                                                    </div>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                </div>
+                                                
+                                                <?php if (count($testimonials) > 1) : ?>
+                                                    <!-- Testimonials Navigation -->
+                                                    <div class="testimonials-nav">
+                                                        <div class="testimonials-dots">
+                                                            <?php foreach ($testimonials as $index => $testimonial) : ?>
+                                                                <button class="testimonial-dot <?php echo $index === 0 ? 'active' : ''; ?>" 
+                                                                        data-slide="<?php echo $index; ?>"
+                                                                        aria-label="Go to testimonial <?php echo $index + 1; ?>"></button>
+                                                            <?php endforeach; ?>
+                                                        </div>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </section>
+                                <?php
+                                break;
+                                
+                            case 'centered_text_block':
+                                ?>
+                                <section class="centered-text-block-section">
+                                    <div class="container">
+                                        <div class="ctb-wrapper">
+                                            <!-- Floating Stats Cards -->
+                                            <div class="ctb-floating-cards">
+                                                <?php for ($i = 1; $i <= 6; $i++) : 
+                                                    $title = $section["ctb_card_title_{$i}"] ?? '';
+                                                    $description = $section["ctb_card_description_{$i}"] ?? '';
+                                                    $year = $section["ctb_card_year_{$i}"] ?? '';
+                                                    
+                                                    if (!empty($title) || !empty($description)) : ?>
+                                                        <div class="ctb-card ctb-card-<?php echo $i; ?>">
+                                                            <?php if (!empty($title)) : ?>
+                                                                <div class="ctb-card-title t-40 fw-700 font-caladea">
+                                                                    <?php echo esc_html($title); ?>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                            
+                                                            <?php if (!empty($description)) : ?>
+                                                                <div class="ctb-card-description t-14 fw-500">
+                                                                    <?php echo esc_html($description); ?>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                            
+                                                            <?php if (!empty($year)) : ?>
+                                                                <div class="ctb-card-year">
+                                                                    <span class="year-badge t-12 fw-700">
+                                                                        <?php echo esc_html($year); ?>
+                                                                    </span>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    <?php endif;
+                                                endfor; ?>
+                                            </div>
+                                            
+                                            <!-- Central Content -->
+                                            <div class="ctb-central-content">
+                                                <?php if (!empty($section['heading_ctb'])) : ?>
+                                                    <h2 class="ctb-heading t-56 fw-700 font-caladea">
+                                                        <?php echo wp_kses_post(nl2br($section['heading_ctb'])); ?>
+                                                    </h2>
+                                                <?php endif; ?>
+                                                
+                                                <?php if (!empty($section['paragraph_ctb'])) : ?>
+                                                    <div class="ctb-paragraph t-20 fw-300">
+                                                        <p><?php echo wp_kses_post(nl2br($section['paragraph_ctb'])); ?></p>
+                                                    </div>
+                                                <?php endif; ?>
+                                                
+                                                <?php if (!empty($section['btn_1_text_ctb']) || !empty($section['btn_2_text_ctb'])) : ?>
+                                                    <div class="ctb-buttons">
+                                                        <?php if (!empty($section['btn_1_text_ctb'])) : ?>
+                                                            <a href="<?php echo esc_url($section['bnt_1_link_ctb'] ?: '#'); ?>" 
+                                                               class="btn-orange ctb-btn-primary t-20 fw-500">
+                                                                <?php echo esc_html($section['btn_1_text_ctb']); ?>
+                                                            </a>
+                                                        <?php endif; ?>
+                                                        
+                                                        <?php if (!empty($section['btn_2_text_ctb'])) : ?>
+                                                            <a href="<?php echo esc_url($section['btn_2_link_ctb'] ?: '#'); ?>" 
+                                                               class="btn btn-secondary ctb-btn-secondary t-20 fw-500">
+                                                                <?php echo esc_html($section['btn_2_text_ctb']); ?>
+                                                            </a>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                <?php endif; ?>
+                                                
+                                                <?php if (!empty($section['span_ctb'])) : ?>
+                                                    <div class="ctb-span t-16 fw-300">
+                                                        <p><?php echo wp_kses_post(nl2br($section['span_ctb'])); ?></p>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <?php
+                                break;
+                                
                             // Add more layout cases here as you create them
                             default:
                                 ?>
@@ -381,6 +722,144 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    
+    // ===================================
+    // TEXT BLOCK WITH CARDS AND IMAGE SLIDER
+    // ===================================
+    
+    // Initialize TBCI slider
+    const tbciSlider = document.getElementById('tbci-slider');
+    if (tbciSlider) {
+        const tbciSlides = tbciSlider.querySelectorAll('.tbci-slide');
+        const nextButtons = document.querySelectorAll('[data-next-slide]');
+        
+        let currentTbciSlide = 0;
+        
+        function showTbciSlide(index) {
+            // Hide all slides
+            tbciSlides.forEach(slide => slide.classList.remove('active'));
+            
+            // Show current slide
+            if (tbciSlides[index]) {
+                tbciSlides[index].classList.add('active');
+            }
+            
+            currentTbciSlide = index;
+        }
+        
+        function nextTbciSlide() {
+            const next = (currentTbciSlide + 1) % tbciSlides.length;
+            showTbciSlide(next);
+        }
+        
+        // Add click event to all next buttons
+        nextButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                nextTbciSlide();
+            });
+        });
+    }
+    
+    // ===================================
+    // TEXT BLOCK WITH IMAGE SLIDER (TBWIS)
+    // ===================================
+    
+    // Initialize TBWIS slider
+    const tbwisSlider = document.getElementById('tbwis-slider');
+    if (tbwisSlider) {
+        const tbwisSlides = tbwisSlider.querySelectorAll('.tbwis-slide');
+        const tbwisNextButtons = document.querySelectorAll('[data-next-slide-tbwis]');
+        
+        let currentTbwisSlide = 0;
+        
+        function showTbwisSlide(index) {
+            // Hide all slides
+            tbwisSlides.forEach(slide => slide.classList.remove('active'));
+            
+            // Show current slide
+            if (tbwisSlides[index]) {
+                tbwisSlides[index].classList.add('active');
+            }
+            
+            currentTbwisSlide = index;
+        }
+        
+        function nextTbwisSlide() {
+            const next = (currentTbwisSlide + 1) % tbwisSlides.length;
+            showTbwisSlide(next);
+        }
+        
+        // Add click event to all next buttons
+        tbwisNextButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                nextTbwisSlide();
+            });
+        });
+    }
+
+    // ===================================
+    // TESTIMONIALS FUNCTIONALITY
+    // ===================================
+
+    const testimonialsSlider = document.getElementById('testimonials-slider');
+    if (testimonialsSlider) {
+        const testimonialsSlides = testimonialsSlider.querySelectorAll('.testimonial-slide');
+        const testimonialsDots = document.querySelectorAll('.testimonial-dot');
+        const testimonialsNav = document.querySelector('.testimonials-nav');
+        const testimonialsNavDots = document.querySelector('.testimonials-dots');
+
+        let currentTestimonial = 0;
+        let testimonialInterval;
+
+        function showTestimonial(index) {
+            // Hide all slides
+            testimonialsSlides.forEach(slide => slide.classList.remove('active'));
+            
+            // Remove active class from all dots
+            testimonialsDots.forEach(dot => dot.classList.remove('active'));
+            
+            // Show current slide
+            testimonialsSlides[index].classList.add('active');
+            if (testimonialsDots[index]) testimonialsDots[index].classList.add('active');
+            
+            currentTestimonial = index;
+        }
+
+        function nextTestimonial() {
+            const next = (currentTestimonial + 1) % testimonialsSlides.length;
+            showTestimonial(next);
+        }
+
+        function prevTestimonial() {
+            const prev = (currentTestimonial - 1 + testimonialsSlides.length) % testimonialsSlides.length;
+            showTestimonial(prev);
+        }
+
+        function startTestimonialAutoSlide() {
+            testimonialInterval = setInterval(nextTestimonial, 5000); // Change testimonial every 5 seconds
+        }
+
+        function stopTestimonialAutoSlide() {
+            clearInterval(testimonialInterval);
+        }
+
+        // Event listeners
+        if (testimonialsNav) {
+            testimonialsNav.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = e.target.closest('.testimonial-dot');
+                if (target) {
+                    stopTestimonialAutoSlide();
+                    const index = target.getAttribute('data-slide');
+                    showTestimonial(index);
+                    startTestimonialAutoSlide();
+                }
+            });
+        }
+
+        // Start auto-slide
+        startTestimonialAutoSlide();
+    }
 });
 </script>
 
