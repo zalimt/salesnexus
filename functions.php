@@ -554,4 +554,123 @@ function salesnexus_svg_admin_styles() {
         }
     </style>';
 }
-add_action('admin_head', 'salesnexus_svg_admin_styles'); 
+add_action('admin_head', 'salesnexus_svg_admin_styles');
+
+/**
+ * Create Sample Blog Posts
+ */
+function salesnexus_create_sample_posts() {
+    // Check if we already have sample posts
+    $existing_posts = get_posts(array(
+        'post_type' => 'post',
+        'meta_key' => '_sample_post',
+        'meta_value' => 'yes',
+        'numberposts' => 1
+    ));
+    
+    if (!empty($existing_posts)) {
+        return; // Sample posts already exist
+    }
+    
+    // Sample posts data
+    $posts_data = array(
+        array(
+            'title' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+            'content' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+            'categories' => array('CRM', 'Sales', 'Marketing'),
+            'date' => '2024-01-15'
+        ),
+        array(
+            'title' => 'Ut enim ad minim veniam, quis nostrud exercitation ullamco',
+            'content' => 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+            'categories' => array('Sales', 'Marketing'),
+            'date' => '2024-01-10'
+        ),
+        array(
+            'title' => 'The Top Types of AI-Generated Content in Marketing',
+            'content' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+            'categories' => array('Marketing'),
+            'date' => '2024-01-08'
+        ),
+        array(
+            'title' => 'Ex ea commodo consequat. Duis aute irure dolor in repre',
+            'content' => 'Ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            'categories' => array('CRM'),
+            'date' => '2024-01-05'
+        ),
+        array(
+            'title' => 'Hendrerit in voluptate velit esse cillum dolore eu fugiat',
+            'content' => 'Hendrerit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
+            'categories' => array('Sales'),
+            'date' => '2024-01-03'
+        ),
+        array(
+            'title' => 'Nulla pariatur. Excepteur sint occaecat cupidatat non proident',
+            'content' => 'Nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.',
+            'categories' => array('CRM', 'Marketing'),
+            'date' => '2024-01-01'
+        )
+    );
+    
+    foreach ($posts_data as $post_data) {
+        // Create the post
+        $post_id = wp_insert_post(array(
+            'post_title' => $post_data['title'],
+            'post_content' => $post_data['content'],
+            'post_status' => 'publish',
+            'post_type' => 'post',
+            'post_date' => $post_data['date'],
+            'post_author' => 1
+        ));
+        
+        if (!is_wp_error($post_id)) {
+            // Mark as sample post
+            update_post_meta($post_id, '_sample_post', 'yes');
+            
+            // Assign categories
+            foreach ($post_data['categories'] as $category_name) {
+                $category = get_term_by('name', $category_name, 'category');
+                if (!$category) {
+                    // Create category if it doesn't exist
+                    $category = wp_insert_term($category_name, 'category');
+                    if (!is_wp_error($category)) {
+                        wp_set_post_categories($post_id, array($category['term_id']), true);
+                    }
+                } else {
+                    wp_set_post_categories($post_id, array($category->term_id), true);
+                }
+            }
+        }
+    }
+}
+
+// Hook to create sample posts on theme activation
+add_action('after_switch_theme', 'salesnexus_create_sample_posts');
+
+// Admin action to manually create sample posts
+function salesnexus_create_posts_admin_action() {
+    if (isset($_GET['create_sample_posts']) && current_user_can('manage_options')) {
+        salesnexus_create_sample_posts();
+        wp_redirect(admin_url('edit.php?post_type=post&posts_created=1'));
+        exit;
+    }
+}
+add_action('admin_init', 'salesnexus_create_posts_admin_action');
+
+// Show admin notice with option to create posts
+function salesnexus_posts_admin_notice() {
+    $screen = get_current_screen();
+    if ($screen->id === 'edit-post' && wp_count_posts()->publish == 0) {
+        $url = admin_url('edit.php?post_type=post&create_sample_posts=1');
+        echo '<div class="notice notice-info">
+            <p><strong>No blog posts found.</strong> <a href="' . esc_url($url) . '" class="button">Create 6 Sample Posts</a> to test your blog template.</p>
+        </div>';
+    }
+    
+    if (isset($_GET['posts_created'])) {
+        echo '<div class="notice notice-success is-dismissible">
+            <p><strong>Success!</strong> 6 sample blog posts have been created.</p>
+        </div>';
+    }
+}
+add_action('admin_notices', 'salesnexus_posts_admin_notice'); 
