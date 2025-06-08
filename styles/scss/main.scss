@@ -268,6 +268,17 @@
     .hero-buttons {
         flex-direction: column;
         gap: 0.75rem;
+        width: 100%;
+    }
+    
+    .btn {
+        width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 }
 
@@ -409,7 +420,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        min-width: 200px;
+        min-width: 120px;
         height: 80px;
     }
     
@@ -440,8 +451,8 @@
         padding: 40px 0;
         
         .logo-item {
-            padding: 0 20px;
-            min-width: 150px;
+            padding: 0 15px;
+            min-width: 100px;
             height: 60px;
         }
         
@@ -1838,7 +1849,7 @@
         
         .ctb-floating-cards {
             .ctb-card {
-                min-width: 160px;
+                min-width: 120px;
                 padding: 16px 20px;
                 
                 .ctb-card-title {
@@ -1896,7 +1907,7 @@
         
         .ctb-floating-cards {
             .ctb-card {
-                min-width: 140px;
+                min-width: 100px;
                 padding: 12px 16px;
                 
                 .ctb-card-title {

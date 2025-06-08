@@ -42,5 +42,40 @@
                 <span class="hamburger-line"></span>
             </button>
         </div>
+        
+        <!-- Mobile Menu Panel -->
+        <div class="mobile-menu-panel">
+            <!-- Close Button -->
+            <button class="mobile-menu-close" aria-label="Close mobile menu">
+                <span class="close-icon"></span>
+            </button>
+            
+            <div class="mobile-menu-content">
+                <nav class="mobile-navigation">
+                    <?php
+                    if (has_nav_menu('primary')) {
+                        wp_nav_menu(array(
+                            'theme_location' => 'primary',
+                            'menu_class'     => 'mobile-menu-list',
+                            'container'      => false,
+                            'fallback_cb'    => false,
+                        ));
+                    } else {
+                        echo '<ul class="mobile-menu-list">';
+                        echo '<li><a href="#">Product</a></li>';
+                        echo '<li><a href="#">How it Works</a></li>';
+                        echo '<li><a href="#">Resources</a></li>';
+                        echo '<li><a href="#">Pricing</a></li>';
+                        echo '</ul>';
+                    }
+                    ?>
+                </nav>
+                
+                <div class="mobile-menu-actions">
+                    <a href="#" class="btn-demo btn-orange t-17 fw-500">Get a Demo</a>
+                    <a href="#" class="btn-trial t-17 fw-500">Start Free Trial</a>
+                </div>
+            </div>
+        </div>
     </div>
 </header>
