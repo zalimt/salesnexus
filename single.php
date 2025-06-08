@@ -12,7 +12,7 @@ get_header(); ?>
         
         <!-- Featured Image Hero Section -->
         <?php if (has_post_thumbnail()) : ?>
-            <section class="single-post-hero" style="background-image: url('<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>');">
+            <section class="single-post-hero" style="background-image: url('<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'hero-image') ?: get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>');">
                 <div class="hero-overlay">
                     <div class="container">
                         <div class="hero-content">

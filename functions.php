@@ -203,6 +203,12 @@ function salesnexus_theme_setup() {
     // Add support for post thumbnails
     add_theme_support('post-thumbnails');
     
+    // Add custom image sizes for better quality
+    add_image_size('high-quality-large', 1920, 1080, false); // High quality large images
+    add_image_size('high-quality-medium', 1200, 800, false); // High quality medium images
+    add_image_size('blog-thumbnail', 600, 400, true); // Blog post thumbnails
+    add_image_size('hero-image', 1920, 1080, true); // Hero section images
+    
     // Add support for title tag
     add_theme_support('title-tag');
     
@@ -673,4 +679,199 @@ function salesnexus_posts_admin_notice() {
         </div>';
     }
 }
-add_action('admin_notices', 'salesnexus_posts_admin_notice'); 
+add_action('admin_notices', 'salesnexus_posts_admin_notice');
+
+/**
+ * ===================================
+ * IMAGE QUALITY IMPROVEMENTS
+ * ===================================
+ */
+
+/**
+ * Increase JPEG image quality to 95% (default is 82%)
+ */
+function salesnexus_jpeg_quality($quality, $context) {
+    return 95;
+}
+add_filter('jpeg_quality', 'salesnexus_jpeg_quality', 10, 2);
+add_filter('wp_editor_set_quality', 'salesnexus_jpeg_quality', 10, 2);
+
+/**
+ * Disable WordPress big image size threshold (prevents auto-resizing large images)
+ */
+function salesnexus_disable_big_image_size_threshold() {
+    return false; // Disable the 2560px threshold
+}
+add_filter('big_image_size_threshold', 'salesnexus_disable_big_image_size_threshold');
+
+/**
+ * Completely disable automatic WebP generation
+ */
+function salesnexus_disable_webp_generation() {
+    return false;
+}
+add_filter('wp_image_editors', function($editors) {
+    // Remove WebP support from image editors
+    return array('WP_Image_Editor_GD');
+});
+
+/**
+ * Disable WordPress image compression entirely for uploads
+ */
+function salesnexus_disable_image_compression($quality, $mime_type) {
+    // Return 100% quality for all image types
+    return 100;
+}
+add_filter('wp_editor_set_quality', 'salesnexus_disable_image_compression', 999, 2);
+
+/**
+ * Disable image scaling/resizing during upload
+ */
+function salesnexus_disable_image_scaling($value) {
+    return false;
+}
+add_filter('wp_image_resize_identical_dimensions', 'salesnexus_disable_image_scaling');
+
+/**
+ * Prevent WordPress from creating any intermediate image sizes during upload
+ */
+function salesnexus_disable_intermediate_images($metadata, $attachment_id) {
+    // Keep only the original uploaded image
+    if (isset($metadata['sizes'])) {
+        // Optionally keep only specific sizes we need
+        $keep_sizes = array('high-quality-large', 'high-quality-medium', 'hero-image');
+        $metadata['sizes'] = array_intersect_key($metadata['sizes'], array_flip($keep_sizes));
+    }
+    return $metadata;
+}
+add_filter('wp_generate_attachment_metadata', 'salesnexus_disable_intermediate_images', 10, 2);
+
+/**
+ * Add admin notice to regenerate thumbnails after quality changes
+ */
+function salesnexus_image_quality_admin_notice() {
+    if (current_user_can('manage_options')) {
+        $regenerate_url = admin_url('admin.php?page=salesnexus-regenerate-images&action=regenerate');
+        echo '<div class="notice notice-info is-dismissible">';
+        echo '<p><strong>SalesNexus:</strong> Image quality settings have been updated. ';
+        echo '<a href="' . esc_url($regenerate_url) . '" class="button button-primary">Regenerate All Images</a> ';
+        echo 'to apply high-quality settings to existing images.</p>';
+        echo '</div>';
+    }
+}
+add_action('admin_notices', 'salesnexus_image_quality_admin_notice');
+
+/**
+ * Handle image regeneration
+ */
+function salesnexus_handle_image_regeneration() {
+    if (isset($_GET['page']) && $_GET['page'] === 'salesnexus-regenerate-images' && 
+        isset($_GET['action']) && $_GET['action'] === 'regenerate' && 
+        current_user_can('manage_options')) {
+        
+        // Get all image attachments
+        $attachments = get_posts(array(
+            'post_type' => 'attachment',
+            'post_mime_type' => 'image',
+            'post_status' => 'inherit',
+            'numberposts' => -1,
+        ));
+        
+        $regenerated = 0;
+        foreach ($attachments as $attachment) {
+            $file_path = get_attached_file($attachment->ID);
+            if ($file_path && file_exists($file_path)) {
+                // Force regeneration of thumbnails with our new quality settings
+                wp_update_attachment_metadata($attachment->ID, wp_generate_attachment_metadata($attachment->ID, $file_path));
+                $regenerated++;
+            }
+        }
+        
+        // Redirect with success message
+        $redirect_url = admin_url('upload.php?regenerated=' . $regenerated);
+        wp_redirect($redirect_url);
+        exit;
+    }
+}
+add_action('admin_init', 'salesnexus_handle_image_regeneration');
+
+/**
+ * Increase image upload size limits
+ */
+function salesnexus_increase_upload_size($size) {
+    return '32M'; // 32MB upload limit
+}
+add_filter('upload_size_limit', 'salesnexus_increase_upload_size');
+
+/**
+ * Add high-quality image sizes to Media Library dropdown
+ */
+function salesnexus_custom_image_sizes($sizes) {
+    return array_merge($sizes, array(
+        'high-quality-large' => __('High Quality Large (1920x1080)', 'salesnexus'),
+        'high-quality-medium' => __('High Quality Medium (1200x800)', 'salesnexus'),
+        'blog-thumbnail' => __('Blog Thumbnail (600x400)', 'salesnexus'),
+        'hero-image' => __('Hero Image (1920x1080)', 'salesnexus'),
+    ));
+}
+add_filter('image_size_names_choose', 'salesnexus_custom_image_sizes');
+
+/**
+ * Prevent WordPress from creating additional image sizes for uploads
+ * (keeps only the sizes we define)
+ */
+function salesnexus_remove_default_image_sizes($sizes) {
+    // Remove default WordPress image sizes to prevent unnecessary compression
+    unset($sizes['medium_large']); // 768px
+    unset($sizes['1536x1536']);    // 1536px
+    unset($sizes['2048x2048']);    // 2048px
+    return $sizes;
+}
+add_filter('intermediate_image_sizes_advanced', 'salesnexus_remove_default_image_sizes');
+
+/**
+ * Force higher quality for WebP images if supported
+ */
+function salesnexus_webp_quality($quality, $mime_type, $context) {
+    if ($mime_type === 'image/webp') {
+        return 95; // Higher quality for WebP
+    }
+    return $quality;
+}
+add_filter('wp_editor_set_quality', 'salesnexus_webp_quality', 10, 3);
+
+/**
+ * Disable image compression for PNG files
+ */
+function salesnexus_png_quality($quality, $mime_type) {
+    if ($mime_type === 'image/png') {
+        return 100; // No compression for PNG
+    }
+    return $quality;
+}
+add_filter('wp_editor_set_quality', 'salesnexus_png_quality', 10, 2);
+
+/**
+ * Add image quality settings to Media settings page
+ */
+function salesnexus_add_image_quality_settings() {
+    add_settings_section(
+        'salesnexus_image_quality',
+        'Image Quality Settings',
+        function() {
+            echo '<p>These settings control the quality of images uploaded to your site.</p>';
+        },
+        'media'
+    );
+    
+    add_settings_field(
+        'salesnexus_jpeg_quality_setting',
+        'JPEG Quality',
+        function() {
+            echo '<p>JPEG quality is set to <strong>95%</strong> for high-quality images.</p>';
+            echo '<p><em>Note: Higher quality means larger file sizes but better image clarity.</em></p>';
+        },
+        'media',
+        'salesnexus_image_quality'
+    );
+} 

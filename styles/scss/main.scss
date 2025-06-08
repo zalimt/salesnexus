@@ -3293,3 +3293,195 @@
     }
 }
 
+// ===================================
+// RESOURCES CARDS SECTION STYLES
+// ===================================
+
+.resources-cards-section {
+    padding: 100px 0;
+
+    &.grey {
+        background: #F9F9F9;
+    }
+    
+    .resources-cards-header {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 50px;
+     
+        .left {
+            .resources-cards-title {
+                color: #000;
+                margin-bottom: 12px;
+            }
+            
+            .resources-cards-subtitle {
+                color: #000;
+                opacity: 0.7;
+            }
+        }
+        .right {
+            .resources-cards-header-btn {
+                .btn-white-outline {
+                    background: #fff;
+                    color: #E74A1C;
+                    border: 1px solid #E74A1C;
+                    padding: 13px 15px 14px 15px;
+                    border-radius: 56px;
+                    text-decoration: none;
+                    transition: all 0.3s ease;
+                    display: inline-block;
+                    
+                    &:hover {
+                        background: #E74A1C;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+
+    
+    
+    
+    .resources-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 30px;
+    }
+    
+    .resources-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 40px 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        border: 1px solid #F5F5F5;
+        
+        &:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+    }
+    
+    .resources-card-content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    
+    .resources-card-title {
+        color: #000;
+        margin-bottom: 20px;
+    }
+    
+    .resources-card-description {
+        color: #666;
+        margin-bottom: 30px;
+        flex-grow: 1;
+    }
+    
+    .resources-card-button {
+        margin-top: auto;
+        
+        .btn-orange-outline {
+            background: transparent;
+            color: #E74A1C;
+            border: 1px solid #E74A1C;
+            padding: 13px 15px 14px 15px;
+            border-radius: 56px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            
+            &:hover {
+                background: #E74A1C;
+                color: #fff;
+            }
+        }
+    }
+    
+    // Responsive Design
+    @media (max-width: 1200px) {
+        .resources-cards-grid {
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+        
+        .resources-cards-header-btn {
+            position: static;
+            transform: none;
+            margin-top: 20px;
+        }
+    }
+    
+    @media (max-width: 992px) {
+        padding: 80px 0;
+        
+        .resources-cards-header {
+            margin-bottom: 60px;
+        }
+        
+        .resources-cards-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .resources-card {
+            padding: 30px 25px;
+        }
+        
+        .resources-cards-title {
+            font-size: 38px;
+        }
+        
+        .resources-cards-subtitle {
+            font-size: 16px;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        padding: 60px 0;
+        
+        .resources-cards-header {
+            margin-bottom: 40px;
+        }
+        
+        .resources-cards-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        
+        .resources-card {
+            padding: 25px 20px;
+        }
+        
+        .resources-cards-title {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        
+        .resources-cards-subtitle {
+            font-size: 15px;
+            margin-bottom: 30px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        padding: 40px 0;
+        
+        .resources-cards-title {
+            font-size: 28px;
+        }
+        
+        .resources-cards-subtitle {
+            font-size: 14px;
+        }
+        
+        .resources-card {
+            padding: 20px 15px;
+        }
+    }
+}
+

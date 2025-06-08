@@ -93,7 +93,7 @@
                                                                 <?php if (!empty($slide['image_hero_slider_slide'])) : ?>
                                                                     <div class="hero-image-content">
                                                                         <div class="hero-mockup-container">
-                                                                            <img src="<?php echo esc_url($slide['image_hero_slider_slide']['sizes']['large'] ?: $slide['image_hero_slider_slide']['url']); ?>" 
+                                                                            <img src="<?php echo esc_url($slide['image_hero_slider_slide']['sizes']['hero-image'] ?: $slide['image_hero_slider_slide']['sizes']['high-quality-large'] ?: $slide['image_hero_slider_slide']['url']); ?>" 
                                                                                  alt="<?php echo esc_attr($slide['image_hero_slider_slide']['alt'] ?: 'SalesNexus CRM Interface'); ?>"
                                                                                  class="hero-mockup-image">
                                                                         </div>
@@ -724,7 +724,7 @@
                                 ?>
                                 <section class="resources-header-section" style="<?php 
                                     if (!empty($section['resources_background_image'])) {
-                                        echo 'background-image: url(' . esc_url($section['resources_background_image']['sizes']['large'] ?: $section['resources_background_image']['url']) . ');';
+                                        echo 'background-image: url(' . esc_url($section['resources_background_image']['sizes']['high-quality-large'] ?: $section['resources_background_image']['sizes']['full'] ?: $section['resources_background_image']['url']) . ');';
                                     }
                                 ?>">
                                     <div class="container">
@@ -741,6 +741,74 @@
                                                 </div>
                                             <?php endif; ?>
                                         </div>
+                                    </div>
+                                </section>
+                                <?php
+                                break;
+                                
+                            case 'resources_cards':
+                                $section_bg_class = !empty($section['resources_cards_section_bg']) ? $section['resources_cards_section_bg'] : '';
+                                ?>
+                                <section class="resources-cards-section <?php echo esc_attr($section_bg_class); ?>">
+                                    <div class="container">
+                                        <div class="resources-cards-header">
+                                            <div class="left">
+                                                <?php if (!empty($section['resources_cards_section_title'])) : ?>
+                                                    <h2 class="resources-cards-title font-lexend t-24 fw-600">
+                                                        <?php echo esc_html($section['resources_cards_section_title']); ?>
+                                                    </h2>
+                                                <?php endif; ?>
+                                                
+                                                <?php if (!empty($section['resources_cards_section_subtitle'])) : ?>
+                                                    <div class="resources-cards-subtitle font-lexend t-20 fw-300">
+                                                        <?php echo wp_kses_post(nl2br($section['resources_cards_section_subtitle'])); ?>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="right">
+                                                <?php if (!empty($section['resources_cards_section_btn_text'])) : ?>
+                                                    <div class="resources-cards-header-btn">
+                                                        <a href="<?php echo esc_url($section['resources_cards_section_btn_link'] ?: '#'); ?>" 
+                                                           class="btn-white-outline font-lexend t-15 fw-500">
+                                                            <?php echo esc_html($section['resources_cards_section_btn_text']); ?>
+                                                        </a>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                        
+                                        <?php 
+                                        $cards = $section['resources_cards_card'];
+                                        if ($cards && is_array($cards)) : ?>
+                                            <div class="resources-cards-grid">
+                                                <?php foreach ($cards as $card) : ?>
+                                                    <div class="resources-card">
+                                                        <div class="resources-card-content">
+                                                            <?php if (!empty($card['resources_cards_card_title'])) : ?>
+                                                                <h3 class="resources-card-title font-lexend t-20 fw-500">
+                                                                    <?php echo esc_html($card['resources_cards_card_title']); ?>
+                                                                </h3>
+                                                            <?php endif; ?>
+                                                            
+                                                            <?php if (!empty($card['resources_cards_card_description'])) : ?>
+                                                                <div class="resources-card-description font-lexend t-16 fw-300">
+                                                                    <?php echo wp_kses_post(nl2br($card['resources_cards_card_description'])); ?>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                            
+                                                            <?php if (!empty($card['resources_cards_card_btn_text'])) : ?>
+                                                                <div class="resources-card-button">
+                                                                    <a href="<?php echo esc_url($card['resources_cards_card_btn_link'] ?: '#'); ?>" 
+                                                                       class="btn-orange-outline font-lexend t-15 fw-500">
+                                                                        <?php echo esc_html($card['resources_cards_card_btn_text']); ?>
+                                                                    </a>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                 </section>
                                 <?php
