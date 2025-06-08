@@ -769,7 +769,7 @@
                                                 <?php if (!empty($section['resources_cards_section_btn_text'])) : ?>
                                                     <div class="resources-cards-header-btn">
                                                         <a href="<?php echo esc_url($section['resources_cards_section_btn_link'] ?: '#'); ?>" 
-                                                           class="btn-white-outline font-lexend t-15 fw-500">
+                                                           class="btn-white-outline font-lexend t-17 fw-500">
                                                             <?php echo esc_html($section['resources_cards_section_btn_text']); ?>
                                                         </a>
                                                     </div>
@@ -814,7 +814,65 @@
                                 <?php
                                 break;
                                 
-                            // Add more layout cases here as you create them
+                            case 'faq_section':
+                                ?>
+                                <section class="faq-section">
+                                    <div class="container">
+                                        <div class="faq-header">
+                                            <div class="left">
+                                                <?php if (!empty($section['faq_heading'])) : ?>
+                                                    <h2 class="faq-title font-lexend t-24 fw-600">
+                                                        <?php echo esc_html($section['faq_heading']); ?>
+                                                    </h2>
+                                                <?php endif; ?>
+                                                
+                                                <?php if (!empty($section['faq_subheading'])) : ?>
+                                                    <div class="faq-subtitle font-lexend t-20 fw-300">
+                                                        <?php echo wp_kses_post(nl2br($section['faq_subheading'])); ?>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                            
+                                            <div class="right">
+                                                <?php if (!empty($section['faq_btn_text'])) : ?>
+                                                    <div class="faq-header-btn">
+                                                        <a href="<?php echo esc_url($section['faq_btn_link'] ?: '#'); ?>" 
+                                                           class="btn-orange-outline font-lexend t-17 fw-500">
+                                                            <?php echo esc_html($section['faq_btn_text']); ?>
+                                                        </a>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                        
+                                        <?php 
+                                        $faqs = $section['faq-qa'];
+                                        if ($faqs && is_array($faqs)) : ?>
+                                            <div class="faq-accordion">
+                                                <?php foreach ($faqs as $index => $faq) : ?>
+                                                    <div class="faq-item <?php echo $index === 1 ? 'active' : ''; ?>">
+                                                        <div class="faq-question">
+                                                            <h3 class="faq-question-text font-lexend t-21 fw-600">
+                                                                <?php echo wp_kses_post(nl2br($faq['faq-q'])); ?>
+                                                            </h3>
+                                                            <div class="faq-toggle">
+                                                                <span class="faq-icon"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="faq-answer">
+                                                            <div class="faq-answer-content font-lexend t-17 fw-400">
+                                                                <?php echo wp_kses_post(nl2br($faq['faq-a'])); ?>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </section>
+                                <?php
+                                break;
+                                
                             default:
                                 ?>
                                 <section class="unknown-section">
@@ -1113,6 +1171,38 @@ document.addEventListener('DOMContentLoaded', function() {
         // Start auto-slide for this specific slider
         if (testimonialsSlides.length > 1) {
             startTestimonialAutoSlide();
+        }
+    });
+
+    // ===================================
+    // FAQ ACCORDION FUNCTIONALITY
+    // ===================================
+    
+    // Find all FAQ items and add click functionality
+    const faqItems = document.querySelectorAll('.faq-item');
+    
+    faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        const answer = item.querySelector('.faq-answer');
+        
+        if (question && answer) {
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close all other FAQ items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current item
+                if (isActive) {
+                    item.classList.remove('active');
+                } else {
+                    item.classList.add('active');
+                }
+            });
         }
     });
 });
