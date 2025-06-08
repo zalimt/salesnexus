@@ -720,6 +720,32 @@
                                 <?php
                                 break;
                                 
+                            case 'resources_header':
+                                ?>
+                                <section class="resources-header-section" style="<?php 
+                                    if (!empty($section['resources_background_image'])) {
+                                        echo 'background-image: url(' . esc_url($section['resources_background_image']['sizes']['large'] ?: $section['resources_background_image']['url']) . ');';
+                                    }
+                                ?>">
+                                    <div class="container">
+                                        <div class="resources-header-content">
+                                            <?php if (!empty($section['resources_heading'])) : ?>
+                                                <h2 class="resources-heading font-caladea t-56 fw-700">
+                                                    <?php echo wp_kses_post(nl2br($section['resources_heading'])); ?>
+                                                </h2>
+                                            <?php endif; ?>
+                                            
+                                            <?php if (!empty($section['resources_description'])) : ?>
+                                                <div class="resources-description font-lexend t-20 fw-300">
+                                                    <?php echo wp_kses_post(nl2br($section['resources_description'])); ?>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </section>
+                                <?php
+                                break;
+                                
                             // Add more layout cases here as you create them
                             default:
                                 ?>
