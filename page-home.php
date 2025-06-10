@@ -873,6 +873,123 @@
                                 <?php
                                 break;
                                 
+                            case 'youtube':
+                                ?>
+                                <section class="youtube-section">
+                                    <div class="container">
+                                        <?php 
+                                        // Debug: Check what's in the section
+                                        if (defined('WP_DEBUG') && WP_DEBUG) {
+                                            echo '<!-- DEBUG: Section data: ' . print_r($section, true) . ' -->';
+                                        }
+                                        
+                                        // Get the YouTube fields
+                                        $youtube_title = $section['youtube_title'] ?? '';
+                                        $youtube_subtitle = $section['youtube_subtitle'] ?? '';
+                                        $youtube_data = $section['youtube_section'] ?? $section['wysiwyg_section'] ?? '';
+                                        
+                                        // Debug the data
+                                        if (defined('WP_DEBUG') && WP_DEBUG) {
+                                            echo '<!-- DEBUG: YouTube data type: ' . gettype($youtube_data) . ' -->';
+                                            echo '<!-- DEBUG: YouTube data: ' . esc_html(is_string($youtube_data) ? $youtube_data : print_r($youtube_data, true)) . ' -->';
+                                        }
+                                        ?>
+                                        
+                                        <!-- YouTube Title and Subtitle -->
+                                        <?php if (!empty($youtube_title) || !empty($youtube_subtitle)) : ?>
+                                            <div class="youtube-header">
+                                                <?php if (!empty($youtube_title)) : ?>
+                                                    <h2 class="youtube-title font-caladea t-40 fw-700">
+                                                        <?php echo wp_kses_post(nl2br($youtube_title)); ?>
+                                                    </h2>
+                                                <?php endif; ?>
+                                                
+                                                <?php if (!empty($youtube_subtitle)) : ?>
+                                                    <div class="youtube-subtitle font-lexend t-18 fw-400">
+                                                        <?php echo wp_kses_post($youtube_subtitle); ?>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
+                                        <?php endif; ?>
+                                        
+                                        <!-- YouTube Video -->
+                                        <?php if (!empty($youtube_data)) : ?>
+                                            <div class="youtube-content">
+                                                <div class="video-wrapper">
+                                                    <?php 
+                                                    // Handle different data types that ACF oEmbed field might return
+                                                    $oembed_html = '';
+                                                    $youtube_url = '';
+                                                    
+                                                    if (is_string($youtube_data)) {
+                                                        // Check if it's already HTML (iframe) or a URL
+                                                        if (strpos($youtube_data, '<iframe') !== false) {
+                                                            // It's already oEmbed HTML from ACF
+                                                            $oembed_html = $youtube_data;
+                                                        } else {
+                                                            // It's a URL, process it
+                                                            $youtube_url = trim($youtube_data);
+                                                        }
+                                                    } elseif (is_array($youtube_data) && isset($youtube_data['url'])) {
+                                                        // Handle ACF oEmbed field array format
+                                                        $youtube_url = trim($youtube_data['url']);
+                                                    }
+                                                    
+                                                    // If we have HTML already, use it
+                                                    if ($oembed_html) {
+                                                        echo $oembed_html;
+                                                    } elseif ($youtube_url) {
+                                                        // Try to get oEmbed HTML from URL
+                                                        $oembed_result = wp_oembed_get($youtube_url, array('width' => 800, 'height' => 450));
+                                                        
+                                                        if ($oembed_result) {
+                                                            echo $oembed_result;
+                                                        } else {
+                                                            // Manual iframe fallback for YouTube
+                                                            $video_id = '';
+                                                            
+                                                            // Extract YouTube video ID from various URL formats
+                                                            if (preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]+)/', $youtube_url, $matches)) {
+                                                                $video_id = $matches[1];
+                                                            }
+                                                            
+                                                            if ($video_id) {
+                                                                echo '<iframe width="800" height="450" src="https://www.youtube.com/embed/' . esc_attr($video_id) . '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                                                            } else {
+                                                                echo '<div class="video-error">';
+                                                                echo '<p>Unable to load video. Please check the URL.</p>';
+                                                                echo '<p style="font-size: 12px; color: #666; word-break: break-all;">URL: ' . esc_html($youtube_url) . '</p>';
+                                                                echo '<p style="font-size: 12px; color: #666;">Make sure you\'re using a valid YouTube URL (e.g., https://www.youtube.com/watch?v=VIDEO_ID)</p>';
+                                                                echo '</div>';
+                                                            }
+                                                        }
+                                                    } else {
+                                                        echo '<p>No video URL provided.</p>';
+                                                    }
+                                                    
+                                                    // Debug info
+                                                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                                                        echo '<!-- DEBUG: Final URL: ' . esc_html($youtube_url) . ' -->';
+                                                        echo '<!-- DEBUG: Has HTML: ' . ($oembed_html ? 'YES' : 'NO') . ' -->';
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        <?php else : ?>
+                                            <div style="background: #f0f0f0; padding: 20px; margin: 20px 0; border: 1px solid #ccc;">
+                                                <p><strong>Debug Info (YouTube Section):</strong></p>
+                                                <p>No YouTube video found.</p>
+                                                <p>YouTube Title: "<?php echo esc_html($youtube_title); ?>"</p>
+                                                <p>YouTube Subtitle: "<?php echo esc_html(strip_tags($youtube_subtitle)); ?>"</p>
+                                                <p>Available section keys: <?php echo implode(', ', array_keys($section)); ?></p>
+                                                <p>Section layout: <?php echo esc_html($layout); ?></p>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </section>
+                                <?php
+                                break;
+                                
                             default:
                                 ?>
                                 <section class="unknown-section">

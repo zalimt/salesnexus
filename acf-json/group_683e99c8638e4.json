@@ -3182,6 +3182,76 @@
                     ],
                     "min": "",
                     "max": ""
+                },
+                "layout_68489d9a62dd8": {
+                    "key": "layout_68489d9a62dd8",
+                    "name": "youtube",
+                    "label": "YouTUbe",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_6848a5a9e4582",
+                            "label": "YouTube Title",
+                            "name": "youtube_title",
+                            "aria-label": "",
+                            "type": "textarea",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "maxlength": "",
+                            "allow_in_bindings": 0,
+                            "rows": "",
+                            "placeholder": "",
+                            "new_lines": ""
+                        },
+                        {
+                            "key": "field_6848a5bce4583",
+                            "label": "YouTube Subtitle",
+                            "name": "youtube_subtitle",
+                            "aria-label": "",
+                            "type": "wysiwyg",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "allow_in_bindings": 0,
+                            "tabs": "all",
+                            "toolbar": "full",
+                            "media_upload": 1,
+                            "delay": 0
+                        },
+                        {
+                            "key": "field_68489da962dda",
+                            "label": "YouTube Section",
+                            "name": "youtube_section",
+                            "aria-label": "",
+                            "type": "oembed",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "width": "",
+                            "height": "",
+                            "allow_in_bindings": 0
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
                 }
             },
             "min": "",
@@ -3214,5 +3284,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1749360030
+    "modified": 1749591587
 }

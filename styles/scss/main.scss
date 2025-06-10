@@ -3756,3 +3756,362 @@
     }
 }
 
+// ===================================
+// YOUTUBE SECTION
+// ===================================
+
+.youtube-section {
+    padding: 80px 0;
+    background-color: $background-light;
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    .youtube-header {
+        text-align: center;
+        margin-bottom: 40px;
+        
+        .youtube-title {
+            margin: 0 0 20px 0;
+            color: $text-color;
+            font-family: $font-family-heading;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        .youtube-subtitle {
+            margin: 0;
+            color: $text-light;
+            font-family: $font-family-base;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            
+            p {
+                margin: 0 0 15px 0;
+                
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+            
+            // WYSIWYG content styling for subtitle
+            a {
+                color: $primary-color;
+                text-decoration: underline;
+                transition: color 0.3s ease;
+                
+                &:hover {
+                    color: darken($primary-color, 10%);
+                }
+            }
+            
+            strong, b {
+                font-weight: 600;
+            }
+            
+            em, i {
+                font-style: italic;
+            }
+        }
+    }
+    
+    .youtube-content {
+        text-align: center;
+        
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            
+            iframe {
+                width: 100%;
+                height: 450px;
+                border-radius: 8px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            }
+        }
+        
+        // Responsive Design for Video
+        @media (max-width: 768px) {
+            .video-wrapper iframe {
+                height: 315px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .video-wrapper iframe {
+                height: 250px;
+            }
+        }
+    }
+    
+    // Legacy WYSIWYG content styling (if needed for other sections)
+    .wysiwyg-content {
+        // Typography
+        h1, h2, h3, h4, h5, h6 {
+            margin: 0 0 20px 0;
+            color: $text-color;
+            font-family: $font-family-heading;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.75rem; }
+        h4 { font-size: 1.5rem; }
+        h5 { font-size: 1.25rem; }
+        h6 { font-size: 1rem; }
+        
+        p {
+            margin: 0 0 20px 0;
+            color: $text-color;
+            font-family: $font-family-base;
+            font-size: 1rem;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+        
+        // Lists
+        ul, ol {
+            margin: 0 0 20px 0;
+            padding-left: 30px;
+            
+            li {
+                margin-bottom: 8px;
+                color: $text-color;
+                font-family: $font-family-base;
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+        }
+        
+        ul li {
+            list-style-type: disc;
+        }
+        
+        // Links
+        a {
+            color: $primary-color;
+            text-decoration: underline;
+            transition: color 0.3s ease;
+            
+            &:hover {
+                color: darken($primary-color, 10%);
+            }
+        }
+        
+        // Images
+        img {
+            max-width: 100%;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        // Blockquotes
+        blockquote {
+            margin: 30px 0;
+            padding: 20px 30px;
+            background-color: #f8f9fa;
+            border-left: 4px solid $primary-color;
+            border-radius: 4px;
+            
+            p {
+                margin: 0;
+                font-style: italic;
+                font-size: 1.1rem;
+                color: #555;
+            }
+        }
+        
+        // Tables
+        table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+            
+            th, td {
+                padding: 12px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+                font-family: $font-family-base;
+            }
+            
+            th {
+                background-color: #f8f9fa;
+                font-weight: 600;
+                color: $text-color;
+            }
+            
+            tr:hover {
+                background-color: #f8f9fa;
+            }
+        }
+        
+        // Code
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.9rem;
+            color: #e74a1c;
+        }
+        
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            
+            code {
+                background: none;
+                padding: 0;
+                color: inherit;
+            }
+        }
+        
+        // Buttons (if added via WYSIWYG)
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: $primary-color;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-family: $font-family-base;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            
+            &:hover {
+                background-color: darken($primary-color, 10%);
+                color: white;
+            }
+        }
+    }
+    
+    // Responsive Design
+    @media (max-width: 992px) {
+        padding: 60px 0;
+        
+        .youtube-header {
+            margin-bottom: 30px;
+            
+            .youtube-title {
+                font-size: 2rem;
+            }
+            
+            .youtube-subtitle {
+                font-size: 1rem;
+            }
+        }
+        
+        .youtube-content {
+            .video-wrapper iframe {
+                height: 400px;
+            }
+        }
+        
+        .wysiwyg-content {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.75rem; }
+            h3 { font-size: 1.5rem; }
+            h4 { font-size: 1.25rem; }
+        }
+    }
+    
+    @media (max-width: 768px) {
+        padding: 40px 0;
+        
+        .container {
+            padding: 0 15px;
+        }
+        
+        .youtube-header {
+            margin-bottom: 25px;
+            
+            .youtube-title {
+                font-size: 1.75rem;
+                margin-bottom: 15px;
+            }
+            
+            .youtube-subtitle {
+                font-size: 0.9rem;
+            }
+        }
+        
+        .youtube-content {
+            .video-wrapper iframe {
+                height: 315px;
+            }
+        }
+        
+        .wysiwyg-content {
+            h1 { font-size: 1.75rem; }
+            h2 { font-size: 1.5rem; }
+            h3 { font-size: 1.25rem; }
+            h4 { font-size: 1.125rem; }
+            
+            p, li {
+                font-size: 0.9rem;
+            }
+            
+            blockquote {
+                margin: 20px 0;
+                padding: 15px 20px;
+                
+                p {
+                    font-size: 1rem;
+                }
+            }
+            
+            table {
+                font-size: 0.9rem;
+                
+                th, td {
+                    padding: 8px;
+                }
+            }
+        }
+    }
+    
+    @media (max-width: 480px) {
+        padding: 30px 0;
+        
+        .youtube-header {
+            margin-bottom: 20px;
+            
+            .youtube-title {
+                font-size: 1.5rem;
+                margin-bottom: 12px;
+            }
+            
+            .youtube-subtitle {
+                font-size: 0.85rem;
+            }
+        }
+        
+        .youtube-content {
+            .video-wrapper iframe {
+                height: 250px;
+            }
+        }
+        
+        .wysiwyg-content {
+            h1 { font-size: 1.5rem; }
+            h2 { font-size: 1.25rem; }
+            h3 { font-size: 1.125rem; }
+            h4 { font-size: 1rem; }
+            
+            p, li {
+                font-size: 0.85rem;
+            }
+        }
+    }
+}
+
