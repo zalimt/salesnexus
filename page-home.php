@@ -990,6 +990,33 @@
                                 <?php
                                 break;
                                 
+                            case 'wysiwyg':
+                                ?>
+                                <section class="wysiwyg-section">
+                                    <div class="container">
+                                        <?php 
+                                        $wysiwyg_content = $section['wysiwyg_section'];
+                                        if ($wysiwyg_content) : ?>
+                                            <div class="wysiwyg-content">
+                                                <?php 
+                                                // Handle ACF WYSIWYG field content properly
+                                                $processed_content = apply_filters('the_content', $wysiwyg_content);
+                                                echo do_shortcode($processed_content);
+                                                ?>
+                                            </div>
+                                        <?php else : ?>
+                                            <div class="wysiwyg-debug" style="padding: 20px; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 4px;">
+                                                <p><strong>WYSIWYG Debug Info:</strong></p>
+                                                <p>No WYSIWYG content found.</p>
+                                                <p>Available section keys: <?php echo implode(', ', array_keys($section)); ?></p>
+                                                <p>Section layout: <?php echo esc_html($layout); ?></p>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </section>
+                                <?php
+                                break;
+                                
                             default:
                                 ?>
                                 <section class="unknown-section">

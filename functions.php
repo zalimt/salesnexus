@@ -874,4 +874,410 @@ function salesnexus_add_image_quality_settings() {
         'media',
         'salesnexus_image_quality'
     );
-} 
+}
+
+/**
+ * ===================================
+ * CONTACT FORM 7 DEBUGGING & FIXES
+ * ===================================
+ */
+
+/**
+ * Ensure Contact Form 7 scripts and styles are properly loaded
+ */
+function salesnexus_ensure_cf7_assets() {
+    if (function_exists('wpcf7_enqueue_scripts') && function_exists('wpcf7_enqueue_styles')) {
+        // Force enqueue CF7 assets on pages with WYSIWYG content
+        if (is_page() || is_single()) {
+            wpcf7_enqueue_scripts();
+            wpcf7_enqueue_styles();
+        }
+    }
+}
+add_action('wp_enqueue_scripts', 'salesnexus_ensure_cf7_assets', 20);
+
+/**
+ * Add debugging info for Contact Form 7
+ */
+function salesnexus_cf7_debug() {
+    if (current_user_can('administrator') && (is_page() || is_single())) {
+        ?>
+        <script>
+        console.log('CF7 Debug Info:');
+        console.log('CF7 Forms found:', document.querySelectorAll('.wpcf7-form').length);
+        console.log('CF7 Input fields found:', document.querySelectorAll('.wpcf7-form input[type="text"], .wpcf7-form input[type="email"]').length);
+        console.log('All form inputs found:', document.querySelectorAll('input[type="text"], input[type="email"]').length);
+        
+        // Check if fields are hidden
+        document.querySelectorAll('.wpcf7-form input[type="text"], .wpcf7-form input[type="email"]').forEach(function(input, index) {
+            const computedStyle = window.getComputedStyle(input);
+            console.log('Input ' + index + ':', {
+                display: computedStyle.display,
+                visibility: computedStyle.visibility,
+                opacity: computedStyle.opacity,
+                width: computedStyle.width,
+                height: computedStyle.height
+            });
+        });
+        </script>
+        <?php
+    }
+}
+add_action('wp_footer', 'salesnexus_cf7_debug');
+
+/**
+ * Force Contact Form 7 field visibility
+ */
+function salesnexus_cf7_force_visibility() {
+    if (is_page() || is_single()) {
+        ?>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Force show all CF7 input fields
+            const cf7Inputs = document.querySelectorAll('.wpcf7-form input[type="text"], .wpcf7-form input[type="email"], .wpcf7-form input[type="tel"], .wpcf7-form textarea');
+            
+            cf7Inputs.forEach(function(input) {
+                input.style.display = 'block';
+                input.style.visibility = 'visible';
+                input.style.opacity = '1';
+                input.style.width = '100%';
+                input.style.height = 'auto';
+            });
+            
+            console.log('Forced visibility for', cf7Inputs.length, 'CF7 inputs');
+        });
+        </script>
+        <?php
+    }
+}
+add_action('wp_footer', 'salesnexus_cf7_force_visibility');
+
+/**
+ * Override Contact Form 7 default styles
+ */
+function salesnexus_cf7_custom_styles() {
+    if (is_page() || is_single()) {
+        ?>
+        <style>
+        /* Force visibility and proper styling for CF7 fields */
+        .wpcf7-form input[type="text"],
+        .wpcf7-form input[type="email"],
+        .wpcf7-form input[type="tel"],
+        .wpcf7-form input[type="url"],
+        .wpcf7-form textarea {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 12px 16px !important;
+            margin: 8px 0 !important;
+            border: 1px solid #ddd !important;
+            border-radius: 4px !important;
+            font-size: 16px !important;
+            line-height: 1.4 !important;
+            background-color: #fff !important;
+            color: #333 !important;
+            box-sizing: border-box !important;
+            height: auto !important;
+            min-height: 44px !important;
+        }
+        
+        .wpcf7-form textarea {
+            min-height: 120px !important;
+        }
+        
+        .wpcf7-form-control-wrap {
+            display: block !important;
+            width: 100% !important;
+            margin-bottom: 1rem !important;
+        }
+        
+        /* Debug styles to identify hidden elements */
+        .wpcf7-form input[style*="display: none"],
+        .wpcf7-form input[style*="visibility: hidden"] {
+            background-color: red !important;
+            display: block !important;
+            visibility: visible !important;
+        }
+        </style>
+        <?php
+    }
+}
+add_action('wp_head', 'salesnexus_cf7_custom_styles');
+
+/**
+ * Debug what's actually being output in WYSIWYG content
+ */
+function salesnexus_wysiwyg_content_debug() {
+    if (current_user_can('administrator') && (is_page() || is_single())) {
+        ?>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const wysiwygContent = document.querySelector('.wysiwyg-content');
+            if (wysiwygContent) {
+                console.log('=== WYSIWYG Content Debug ===');
+                console.log('WYSIWYG HTML:', wysiwygContent.innerHTML);
+                console.log('WYSIWYG Text:', wysiwygContent.textContent);
+                
+                // Check for CF7 elements
+                const cf7Form = wysiwygContent.querySelector('.wpcf7');
+                const cf7FormTag = wysiwygContent.querySelector('form');
+                const shortcodeText = wysiwygContent.textContent.includes('[contact-form-7');
+                
+                console.log('CF7 form element found:', !!cf7Form);
+                console.log('Any form element found:', !!cf7FormTag);
+                console.log('Contains CF7 shortcode text:', shortcodeText);
+                
+                if (cf7Form) {
+                    console.log('CF7 form HTML:', cf7Form.innerHTML);
+                }
+                if (cf7FormTag) {
+                    console.log('Form HTML:', cf7FormTag.innerHTML);
+                }
+                
+                // Check all input elements in the page
+                const allInputs = document.querySelectorAll('input');
+                console.log('Total inputs on page:', allInputs.length);
+                
+                allInputs.forEach((input, index) => {
+                    console.log(`Input ${index}:`, {
+                        type: input.type,
+                        name: input.name,
+                        class: input.className,
+                        style: input.style.cssText,
+                        computedDisplay: window.getComputedStyle(input).display
+                    });
+                });
+            } else {
+                console.log('No .wysiwyg-content found');
+            }
+        });
+        </script>
+        <?php
+    }
+}
+add_action('wp_footer', 'salesnexus_wysiwyg_content_debug');
+
+/**
+ * Test if shortcodes are working at all
+ */
+function salesnexus_test_shortcode() {
+    return '<div style="background: yellow; padding: 10px; margin: 10px;">TEST SHORTCODE WORKING!</div>';
+}
+add_shortcode('test_shortcode', 'salesnexus_test_shortcode');
+
+/**
+ * Check if Contact Form 7 is active and working
+ */
+function salesnexus_cf7_status_check() {
+    if (current_user_can('administrator')) {
+        ?>
+        <script>
+        console.log('=== CF7 Status Check ===');
+        console.log('CF7 plugin check:', {
+            'wpcf7_contact_form_tag_func': typeof window.wpcf7 !== 'undefined',
+            'cf7_scripts_loaded': !!document.querySelector('script[src*="contact-form-7"]'),
+            'cf7_styles_loaded': !!document.querySelector('link[href*="contact-form-7"]')
+        });
+        </script>
+        <?php
+    }
+}
+add_action('wp_footer', 'salesnexus_cf7_status_check');
+
+/**
+ * Create a simple test contact form if none exists
+ */
+function salesnexus_ensure_test_contact_form() {
+    // Only run this once and only for admins
+    if (!current_user_can('administrator') || get_option('salesnexus_test_form_created')) {
+        return;
+    }
+    
+    // Check if CF7 is active
+    if (!class_exists('WPCF7_ContactForm')) {
+        return;
+    }
+    
+    // Check if we already have any contact forms
+    $existing_forms = get_posts(array(
+        'post_type' => 'wpcf7_contact_form',
+        'numberposts' => 1
+    ));
+    
+    if (!empty($existing_forms)) {
+        // We have forms, let's get the first one's ID
+        $form_id = $existing_forms[0]->ID;
+        update_option('salesnexus_test_form_id', $form_id);
+        return;
+    }
+    
+    // Create a simple test form
+    $form_title = 'Test Contact Form';
+    $form_content = '<label> Your name
+    [text* your-name] </label>
+
+<label> Your email
+    [email* your-email] </label>
+
+<label> Subject
+    [text* your-subject] </label>
+
+<label> Your message (optional)
+    [textarea your-message] </label>
+
+[submit "Send"]';
+    
+    $mail_content = 'From: [your-name] <[your-email]>
+Subject: [your-subject]
+
+Message Body:
+[your-message]
+
+-- 
+This e-mail was sent from a contact form on ' . get_bloginfo('name') . ' (' . get_bloginfo('url') . ')';
+
+    // Create the form
+    $form_id = wp_insert_post(array(
+        'post_type' => 'wpcf7_contact_form',
+        'post_status' => 'publish',
+        'post_title' => $form_title,
+        'post_content' => ''
+    ));
+    
+    if ($form_id) {
+        // Set form content
+        update_post_meta($form_id, '_form', $form_content);
+        
+        // Set mail content
+        update_post_meta($form_id, '_mail', array(
+            'subject' => '[your-subject]',
+            'sender' => '[your-name] <[your-email]>',
+            'body' => $mail_content,
+            'recipient' => get_option('admin_email'),
+            'additional_headers' => '',
+            'attachments' => '',
+            'use_html' => 0,
+            'exclude_blank' => 0
+        ));
+        
+        update_option('salesnexus_test_form_created', true);
+        update_option('salesnexus_test_form_id', $form_id);
+    }
+}
+add_action('init', 'salesnexus_ensure_test_contact_form');
+
+/**
+ * Display helpful CF7 info for admins
+ */
+function salesnexus_cf7_admin_info() {
+    if (current_user_can('administrator') && (is_page() || is_single())) {
+        $test_form_id = get_option('salesnexus_test_form_id');
+        
+        if ($test_form_id) {
+            echo '<!-- CF7 Test Form ID: ' . $test_form_id . ' -->';
+            echo '<!-- Use shortcode: [contact-form-7 id="' . $test_form_id . '"] -->';
+        }
+        
+        // List all available contact forms
+        $forms = get_posts(array(
+            'post_type' => 'wpcf7_contact_form',
+            'numberposts' => -1
+        ));
+        
+        if (!empty($forms)) {
+            echo '<!-- Available CF7 Forms: ';
+            foreach ($forms as $form) {
+                echo 'ID: ' . $form->ID . ' Title: "' . $form->post_title . '" | ';
+            }
+            echo '-->';
+        } else {
+            echo '<!-- No CF7 forms found -->';
+        }
+    }
+}
+add_action('wp_head', 'salesnexus_cf7_admin_info');
+
+/**
+ * ===================================
+ * ACF WYSIWYG SHORTCODE PROCESSING
+ * ===================================
+ */
+
+/**
+ * Ensure ACF WYSIWYG fields process shortcodes
+ */
+function salesnexus_acf_wysiwyg_shortcodes($content, $post_id, $field) {
+    // Only process WYSIWYG fields
+    if ($field['type'] == 'wysiwyg') {
+        // Apply WordPress content filters and process shortcodes
+        $content = apply_filters('the_content', $content);
+        $content = do_shortcode($content);
+    }
+    return $content;
+}
+add_filter('acf/format_value/type=wysiwyg', 'salesnexus_acf_wysiwyg_shortcodes', 10, 3);
+
+/**
+ * Alternative method: Add shortcode processing to ACF WYSIWYG
+ */
+function salesnexus_acf_wysiwyg_add_shortcode_support() {
+    add_filter('acf/format_value', function($value, $post_id, $field) {
+        if (is_string($value) && !empty($value) && isset($field['type']) && $field['type'] === 'wysiwyg') {
+            // Remove existing content filters to avoid double processing
+            remove_filter('the_content', 'wpautop');
+            remove_filter('the_content', 'wptexturize');
+            
+            // Process shortcodes
+            $value = do_shortcode($value);
+            
+            // Re-add content filters
+            add_filter('the_content', 'wpautop');
+            add_filter('the_content', 'wptexturize');
+        }
+        return $value;
+    }, 20, 3);
+}
+add_action('init', 'salesnexus_acf_wysiwyg_add_shortcode_support');
+
+/**
+ * Force shortcode processing for specific ACF field
+ */
+function salesnexus_force_wysiwyg_shortcodes($content) {
+    // Only process if it looks like it contains shortcodes
+    if (strpos($content, '[') !== false && strpos($content, ']') !== false) {
+        // Apply WordPress content processing
+        $content = apply_filters('the_content', $content);
+        // Ensure shortcodes are processed
+        $content = do_shortcode($content);
+    }
+    return $content;
+}
+
+/**
+ * Debug ACF WYSIWYG processing
+ */
+function salesnexus_debug_acf_wysiwyg() {
+    if (current_user_can('administrator')) {
+        ?>
+        <script>
+        console.log('=== ACF WYSIWYG Debug ===');
+        // Check if the content has been processed
+        const wysiwygContent = document.querySelector('.wysiwyg-content');
+        if (wysiwygContent) {
+            const hasShortcodeBrackets = wysiwygContent.innerHTML.includes('[') && wysiwygContent.innerHTML.includes(']');
+            const hasFormElements = wysiwygContent.querySelector('form') !== null;
+            
+            console.log('WYSIWYG Debug:', {
+                'has_shortcode_brackets': hasShortcodeBrackets,
+                'has_form_elements': hasFormElements,
+                'innerHTML_length': wysiwygContent.innerHTML.length,
+                'raw_content': wysiwygContent.innerHTML.substring(0, 500) + '...'
+            });
+        }
+        </script>
+        <?php
+    }
+}
+add_action('wp_footer', 'salesnexus_debug_acf_wysiwyg'); 

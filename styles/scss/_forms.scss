@@ -2,6 +2,287 @@
  * Form Styles
  */
 
+/* ===================================
+ * CONTACT FORM 7 STYLES
+ * ===================================*/
+
+/* Ensure CF7 forms are visible and properly styled */
+.wpcf7-form {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    background: #fff;
+}
+
+/* Form field wrappers */
+.wpcf7-form-control-wrap {
+    display: block;
+    position: relative;
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+/* 3-column grid layout */
+.wpcf7-form .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.wpcf7-form .form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Form field groups */
+.wpcf7-form .field-group {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Labels */
+.wpcf7-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #666;
+    font-size: 14px;
+    font-family: 'Lexend Deca', sans-serif;
+}
+
+/* All input fields */
+.wpcf7-form input[type="text"],
+.wpcf7-form input[type="email"],
+.wpcf7-form input[type="tel"],
+.wpcf7-form input[type="url"],
+.wpcf7-form input[type="password"],
+.wpcf7-form input[type="search"],
+.wpcf7-form input[type="number"],
+.wpcf7-form textarea,
+.wpcf7-form select {
+    display: block !important;
+    visibility: visible !important;
+    width: 100%;
+    max-width: 100%;
+    padding: 16px 20px;
+    margin: 0;
+    border: 2px solid #e6e8eb;
+    border-radius: 50px;
+    font-size: 16px;
+    line-height: 1.4;
+    background-color: #fff;
+    color: #333;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    font-family: 'Lexend Deca', sans-serif;
+    
+    &:focus {
+        outline: none;
+        border-color: #007cba;
+        box-shadow: 0 0 0 3px rgba(0, 124, 186, 0.1);
+    }
+    
+    &::placeholder {
+        color: #999;
+        font-size: 14px;
+    }
+}
+
+/* Select dropdown styling */
+.wpcf7-form select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23666' d='M6 8L0 2h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 20px center;
+    background-size: 12px;
+    padding-right: 50px;
+    cursor: pointer;
+}
+
+/* Textarea specific styles */
+.wpcf7-form textarea {
+    min-height: 120px;
+    resize: vertical;
+    border-radius: 20px;
+}
+
+/* Submit button - Orange style like in the image */
+.wpcf7-form input[type="submit"] {
+    display: block !important;
+    visibility: visible !important;
+    width: 100%;
+    padding: 18px 24px;
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Lexend Deca', sans-serif;
+    margin-top: 2rem;
+    text-transform: none;
+    letter-spacing: 0.5px;
+    
+    &:hover {
+        background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
+    }
+    
+    &:active {
+        transform: translateY(0);
+    }
+    
+    &:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+}
+
+/* Checkbox styling */
+.wpcf7-form input[type="checkbox"] {
+    display: inline-block !important;
+    width: 18px !important;
+    height: 18px !important;
+    margin-right: 12px !important;
+    margin-top: 2px;
+    accent-color: #e74c3c;
+    cursor: pointer;
+}
+
+.wpcf7-form .wpcf7-list-item {
+    display: flex !important;
+    align-items: flex-start;
+    margin: 1.5rem 0;
+    
+    label {
+        display: flex !important;
+        align-items: flex-start;
+        font-size: 14px;
+        line-height: 1.5;
+        color: #666;
+        cursor: pointer;
+        margin: 0;
+    }
+}
+
+/* Privacy policy and checkbox area */
+.wpcf7-form .privacy-section {
+    margin-top: 1.5rem;
+    text-align: left;
+}
+
+/* Error messages */
+.wpcf7-not-valid-tip {
+    display: block !important;
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 8px;
+    font-family: 'Lexend Deca', sans-serif;
+}
+
+/* Response output */
+.wpcf7-response-output {
+    display: block !important;
+    padding: 16px 20px;
+    margin: 20px 0;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Lexend Deca', sans-serif;
+    
+    &.wpcf7-mail-sent-ok {
+        background-color: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+    }
+    
+    &.wpcf7-mail-sent-ng {
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+    }
+    
+    &.wpcf7-validation-errors {
+        background-color: #fff3cd;
+        border: 1px solid #ffeaa7;
+        color: #856404;
+    }
+}
+
+/* Spinner */
+.wpcf7-spinner {
+    display: inline-block !important;
+    visibility: visible !important;
+    margin-left: 12px;
+}
+
+/* Force visibility for any hidden elements */
+.wpcf7 * {
+    visibility: visible !important;
+}
+
+/* WYSIWYG Section specific form styles */
+.wysiwyg-content .wpcf7-form {
+    margin: 2rem 0;
+    padding: 0;
+}
+
+/* File upload */
+.wpcf7-form input[type="file"] {
+    display: block !important;
+    padding: 12px 16px;
+    border: 2px dashed #e6e8eb;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    
+    &:hover {
+        border-color: #007cba;
+        background-color: #f0f8ff;
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .wpcf7-form .form-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .wpcf7-form .form-grid-2 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .wpcf7-form {
+        padding: 1rem;
+    }
+    
+    .wpcf7-form input[type="text"],
+    .wpcf7-form input[type="email"],
+    .wpcf7-form input[type="tel"],
+    .wpcf7-form input[type="url"],
+    .wpcf7-form textarea,
+    .wpcf7-form select {
+        padding: 14px 18px;
+        font-size: 16px;
+    }
+    
+    .wpcf7-form input[type="submit"] {
+        padding: 16px 20px;
+        font-size: 16px;
+    }
+}
+
+/* General form styles for other forms */
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -10,5 +291,18 @@ input[type="tel"],
 input[type="url"],
 textarea,
 select {
-
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    line-height: 1.4;
+    background-color: #fff;
+    color: #333;
+    transition: border-color 0.3s ease;
+    
+    &:focus {
+        outline: none;
+        border-color: #007cba;
+        box-shadow: 0 0 0 2px rgba(0, 124, 186, 0.1);
+    }
 }
