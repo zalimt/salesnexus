@@ -1,4 +1,3 @@
-
 // ===================================
 // SITE HEADER & NAVIGATION
 // ===================================
@@ -29,6 +28,14 @@
                 width: 200px;
                 max-width: 200px;
                 background: url('../../assets/salesnexus-logo.png') center center/cover no-repeat;
+                padding: 8px;
+                border: 2px solid #007bff;
+                border-radius: 6px;
+                transition: all 0.3s ease;
+                
+                &:hover {
+                    border-color: #0056b3;
+                }
             }
         }
     }
